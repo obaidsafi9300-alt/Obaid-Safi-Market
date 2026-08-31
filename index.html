@@ -1,111 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Obaid Safi Market</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f3f3;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Obaid Safi Market</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f3f3f3;
+    color:#111;
+}
+
+/* HEADER */
+header{
+    background:#131921;
+    color:white;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px 20px;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.search-box{
+    flex:1;
+    display:flex;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px;
+    border:none;
+    font-size:16px;
+    outline:none;
+}
+
+.search-box button{
+    border:none;
+    background:#febd69;
+    padding:0 18px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.account,
+.cart{
+    cursor:pointer;
+    padding:7px;
+    white-space:nowrap;
+}
+
+.account:hover,
+.cart:hover{
+    outline:1px solid white;
+}
+
+/* NAVIGATION */
+nav{
+    background:#232f3e;
+    padding:0 15px;
+    display:flex;
+    flex-wrap:wrap;
+}
+
+nav button{
+    background:transparent;
+    border:none;
+    color:white;
+    padding:13px 14px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+nav button:hover{
+    background:#37475a;
+}
+
+/* HERO */
+.hero{
+    min-height:340px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px 20px;
+    background:linear-gradient(#ffffff,#e9e9e9);
+}
+
+.hero h1{
+    font-size:42px;
+    margin:0 0 18px;
+}
+
+.hero p{
+    font-size:17px;
+    color:#555;
+}
+
+.main-button{
+    margin-top:20px;
+    background:#ffd814;
+    border:1px solid #fcd200;
+    padding:14px 30px;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.main-button:hover{
+    background:#f7ca00;
+}
+
+/* CATEGORY SECTION */
+.section{
+    padding:30px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section h2{
+    margin-bottom:20px;
+}
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.category{
+    background:white;
+    padding:30px 15px;
+    text-align:center;
+    border-radius:8px;
+    box-shadow:0 1px 5px rgba(0,0,0,.15);
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.category:hover{
+    transform:translateY(-2px);
+}
+
+/* PRODUCTS */
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:20px;
+}
+
+.product{
+    background:white;
+    border-radius:8px;
+    padding:18px;
+    box-shadow:0 1px 5px rgba(0,0,0,.15);
+}
+
+.product-image{
+    height:140px;
+    background:#eee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:6px;
+    font-size:50px;
+}
+
+.product h3{
+    margin-bottom:5px;
+}
+
+.category-name{
+    color:#666;
+    font-size:14px;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.deal{
+    color:#b12704;
+    font-weight:bold;
+}
+
+.product button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    background:#ffd814;
+    cursor:pointer;
+}
+
+.product button:hover{
+    background:#f7ca00;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:500;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    background:white;
+    padding:25px;
+    width:90%;
+    max-width:420px;
+    border-radius:10px;
+}
+
+.modal-box input{
+    width:100%;
+    padding:12px;
+    margin:7px 0;
+}
+
+.modal-box button{
+    padding:11px 20px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-size:25px;
+}
+
+/* CART */
+.cart-item{
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+    display:flex;
+    justify-content:space-between;
+}
+
+.remove{
+    color:red;
+    cursor:pointer;
+}
+
+/* MESSAGE */
+#message{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#131921;
+    color:white;
+    padding:12px 22px;
+    border-radius:6px;
+    display:none;
+    z-index:1000;
+}
+
+/* FOOTER */
+footer{
+    margin-top:40px;
+    background:#131921;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+@media(max-width:700px){
+    header{
+        flex-wrap:wrap;
     }
 
-    header {
-      background: #131921;
-      color: white;
-      padding: 15px 25px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+    .search-box{
+        order:3;
+        width:100%;
+        flex-basis:100%;
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
+    .hero h1{
+        font-size:30px;
     }
 
-    .search {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
+    .section{
+        padding:20px 12px;
     }
-
-    nav {
-      background: #232f3e;
-      color: white;
-      padding: 12px 25px;
-    }
-
-    nav span {
-      margin-right: 25px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: white;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-    }
-
-    .hero p {
-      font-size: 18px;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 14px 30px;
-      background: #ffd814;
-      color: #111;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .categories {
-      padding: 30px;
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">OBAID SAFI MARKET</div>
-  <input class="search" type="text" placeholder="Search Obaid Safi Market">
-  <div>Hello, Sign in<br><b>Account</b></div>
-  <div><b>Cart</b></div>
+
+<div class="logo" onclick="goHome()">
+OBAID SAFI MARKET
+</div>
+
+<div class="search-box">
+<input
+id="searchInput"
+type="text"
+placeholder="Search Obaid Safi Market"
+onkeyup="liveSearch()"
+>
+<button onclick="searchProducts()">🔍</button>
+</div>
+
+<div class="account" onclick="openLogin()">
+<span id="helloText">Hello, Sign in</span><br>
+<b>Account</b>
+</div>
+
+<div class="cart" onclick="openCart()">
+🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
 </header>
 
+
 <nav>
-  <span>All</span>
-  <span>Today's Deals</span>
-  <span>Electronics</span>
-  <span>Fashion</span>
-  <span>Home</span>
-  <span>Beauty</span>
-  <span>New Arrivals</span>
+
+<button onclick="showAll()">
+All
+</button>
+
+<button onclick="showDeals()">
+Today's Deals
+</button>
+
+<button onclick="filterCategory('Electronics')">
+Electronics
+</button>
+
+<button onclick="filterCategory('Fashion')">
+Fashion
+</button>
+
+<button onclick="filterCategory('Home')">
+Home
+</button>
+
+<button onclick="filterCategory('Beauty')">
+Beauty
+</button>
+
+<button onclick="showNewArrivals()">
+New Arrivals
+</button>
+
 </nav>
 
-<section class="hero">
-  <h1>Welcome to Obaid Safi Market</h1>
-  <p>Discover products from sellers around the world. Shop easily, securely and conveniently.</p>
-  <a class="button" href="#">Start Shopping</a>
+
+<section class="hero" id="home">
+
+<h1>Welcome to Obaid Safi Market</h1>
+
+<p>
+Discover products from sellers around the world.
+Shop easily, securely and conveniently.
+</p>
+
+<button class="main-button" onclick="startShopping()">
+Start Shopping
+</button>
+
 </section>
 
-<section class="categories">
-  <h2>Shop by Category</h2>
-  <h3>Electronics</h3>
-  <h3>Fashion</h3>
-  <h3>Home</h3>
-  <h3>Beauty</h3>
+
+<section class="section">
+
+<h2>Shop by Category</h2>
+
+<div class="categories">
+
+<div class="category"
+onclick="filterCategory('Electronics')">
+💻<br><br>Electronics
+</div>
+
+<div class="category"
+onclick="filterCategory('Fashion')">
+👕<br><br>Fashion
+</div>
+
+<div class="category"
+onclick="filterCategory('Home')">
+🏠<br><br>Home
+</div>
+
+<div class="category"
+onclick="filterCategory('Beauty')">
+✨<br><br>Beauty
+</div>
+
+</div>
+
 </section>
+
+
+<section class="section" id="productsSection">
+
+<h2 id="productTitle">
+All Products
+</h2>
+
+<div class="product-grid" id="productGrid">
+
+
+<div class="product"
+data-name="Smart Phone"
+data-category="Electronics"
+data-deal="true"
+data-new="true">
+
+<div class="product-image">📱</div>
+
+<h3>Smart Phone</h3>
+
+<p class="category-name">
+Electronics
+</p>
+
+<p class="price">
+$299
+</p>
+
+<p class="deal">
+Today's Deal
+</p>
+
+<button onclick="addToCart('Smart Phone',299)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product"
+data-name="Laptop Computer"
+data-category="Electronics"
+data-deal="false"
+data-new="true">
+
+<div class="product-image">💻</div>
+
+<h3>Laptop Computer</h3>
+
+<p class="category-name">
+Electronics
+</p>
+
+<p class="price">
+$599
+</p>
+
+<button onclick="addToCart('Laptop Computer',599)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product"
+data-name="Fashion Shoes"
+data-category="Fashion"
+data-deal="true"
+data-new="false">
+
+<div class="product-image">👟</div>
+
+<h3>Fashion Shoes</h3>
+
+<p class="category-name">
+Fashion
+</p>
+
+<p class="price">
+$49
+</p>
+
+<p class="deal">
+Today's Deal
+</p>
+
+<button onclick="addToCart('Fashion Shoes',49)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product"
+data-name="Men Shirt"
+data-category="Fashion"
+data-deal="false"
+data-new="true">
+
+<div class="product-image">👕</div>
+
+<h3>Men Shirt</h3>
+
+<p class="category-name">
+Fashion
+</p>
+
+<p class="price">
+$25
+</p>
+
+<button onclick="addToCart('Men Shirt',25)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product"
+data-name="Home Lamp"
+data-category="Home"
+data-deal="true"
+data-new="false">
+
+<div class="product-image">💡</div>
+
+<h3>Home Lamp</h3>
+
+<p class="category-name">
+Home
+</p>
+
+<p class="price">
+$35
+</p>
+
+<p class="deal">
+Today's Deal
+</p>
+
+<button onclick="addToCart('Home Lamp',35)">
+Add to Cart
+</button>
+
+</div>
+
+
+<div class="product"
+data-name="Beauty Perfume"
+data-category="Beauty"
+data-deal="false"
+data-new="true">
+
+<div class="product-image">🌸</div>
+
+<h3>Beauty Perfume</h3>
+
+<p class="category-name">
+Beauty
+</p>
+
+<p class="price">
+$45
+</p>
+
+<button onclick="addToCart('Beauty Perfume',45)">
+Add to Cart
+</button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- LOGIN -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+<span class="close"
+onclick="closeLogin()">
+&times;
+</span>
+
+<h2>Sign in</h2>
+
+<input
+id="userName"
+type="text"
+placeholder="Your name"
+>
+
+<input
+id="email"
+type="email"
+placeholder="Email"
+>
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
+
+<button onclick="login()">
+Sign in
+</button>
+
+</div>
+
+</div>
+
+
+<!-- CART -->
+
+<div class="modal" id="cartModal">
+
+<div class="modal-box">
+
+<span class="close"
+onclick="closeCart()">
+&times;
+</span>
+
+<h2>Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<h3>
+Total: $<span id="cartTotal">0</span>
+</h3>
+
+<button onclick="checkout()">
+Proceed to Checkout
+</button>
+
+</div>
+
+</div>
+
+
+<div id="message"></div>
+
+
+<footer>
+
+<h3>OBAID SAFI MARKET</h3>
+
+<p>
+Global Marketplace
+</p>
+
+<p>
+© 2026 Obaid Safi Market
+</p>
+
+</footer>
+
+
+<script>
+
+let cart = [];
+
+function startShopping(){
+
+    document
+    .getElementById("productsSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+function goHome(){
+
+    document
+    .getElementById("home")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+    showAll();
+
+}
+
+
+function showAll(){
+
+    document.getElementById("productTitle")
+    .innerText="All Products";
+
+    document
+    .querySelectorAll(".product")
+    .forEach(function(product){
+
+        product.style.display="block";
+
+    });
+
+    scrollProducts();
+
+}
+
+
+function filterCategory(category){
+
+    document.getElementById("productTitle")
+    .innerText=category;
+
+    document
+    .querySelectorAll(".product")
+    .forEach(function(product){
+
+        if(product.dataset.category===category){
+
+            product.style.display="block";
+
+        }else{
+
+            product.style.display="none";
+
+        }
+
+    });
+
+    scrollProducts();
+
+}
+
+
+function showDeals(){
+
+    document.getElementById("productTitle")
+    .innerText="Today's Deals";
+
+    document
+    .querySelectorAll(".product")
+    .forEach(function(product){
+
+        product.style.display =
+        product.dataset.deal==="true"
+        ? "block"
+        : "none";
+
+    });
+
+    scrollProducts();
+
+}
+
+
+function showNewArrivals(){
+
+    document.getElementById("productTitle")
+    .innerText="New Arrivals";
+
+    document
+    .querySelectorAll(".product")
+    .forEach(function(product){
+
+        product.style.display =
+        product.dataset.new==="true"
+        ? "block"
+        : "none";
+
+    });
+
+    scrollProducts();
+
+}
+
+
+function liveSearch(){
+
+    let text =
+    document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+    document
+    .querySelectorAll(".product")
+    .forEach(function(product){
+
+        let name =
+        product.dataset.name.toLowerCase();
+
+        product.style.display =
+        name.includes(text)
+        ? "block"
+        : "none";
+
+    });
+
+}
+
+
+function searchProducts(){
+
+    liveSearch();
+
+    document.getElementById("productTitle")
+    .innerText="Search Results";
+
+    scrollProducts();
+
+}
+
+
+function scrollProducts(){
+
+    document
+    .getElementById("productsSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+function addToCart(name,price){
+
+    cart.push({
+        name:name,
+        price:price
+    });
+
+    updateCart();
+
+    showMessage(
+        name+" added to cart"
+    );
+
+}
+
+
+function updateCart(){
+
+    document
+    .getElementById("cartCount")
+    .innerText=cart.length;
+
+}
+
+
+function openCart(){
+
+    document
+    .getElementById("cartModal")
+    .style.display="flex";
+
+    renderCart();
+
+}
+
+
+function closeCart(){
+
+    document
+    .getElementById("cartModal")
+    .style.display="none";
+
+}
+
+
+function renderCart(){
+
+    let box =
+    document.getElementById("cartItems");
+
+    box.innerHTML="";
+
+    let total=0;
+
+    if(cart.length===0){
+
+        box.innerHTML=
+        "<p>Your cart is empty.</p>";
+
+    }
+
+    cart.forEach(function(item,index){
+
+        total+=item.price;
+
+        box.innerHTML+=
+        '<div class="cart-item">'+
+        '<span>'+item.name+
+        ' - $'+item.price+'</span>'+
+        '<span class="remove" onclick="removeCart('+index+')">Remove</span>'+
+        '</div>';
+
+    });
+
+    document
+    .getElementById("cartTotal")
+    .innerText=total.toFixed(2);
+
+}
+
+
+function removeCart(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+    renderCart();
+
+}
+
+
+function checkout(){
+
+    if(cart.length===0){
+
+        showMessage(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+    closeCart();
+
+    showMessage(
+        "Checkout opened successfully."
+    );
+
+}
+
+
+function openLogin(){
+
+    document
+    .getElementById("loginModal")
+    .style.display="flex";
+
+}
+
+
+function closeLogin(){
+
+    document
+    .getElementById("loginModal")
+    .style.display="none";
+
+}
+
+
+function login(){
+
+    let name =
+    document
+    .getElementById("userName")
+    .value.trim();
+
+    let email =
+    document
+    .getElementById("email")
+    .value.trim();
+
+    let password =
+    document
+    .getElementById("password")
+    .value;
+
+    if(
+        name==="" ||
+        email==="" ||
+        password===""
+    ){
+
+        showMessage(
+            "Please complete all fields."
+        );
+
+        return;
+
+    }
+
+    document
+    .getElementById("helloText")
+    .innerText="Hello, "+name;
+
+    closeLogin();
+
+    showMessage(
+        "Signed in successfully."
+    );
+
+}
+
+
+function showMessage(text){
+
+    let message =
+    document.getElementById("message");
+
+    message.innerText=text;
+
+    message.style.display="block";
+
+    setTimeout(function(){
+
+        message.style.display="none";
+
+    },2500);
+
+}
+
+
+/* Close windows when clicking outside */
+
+window.onclick=function(event){
+
+    let loginModal=
+    document.getElementById("loginModal");
+
+    let cartModal=
+    document.getElementById("cartModal");
+
+    if(event.target===loginModal){
+
+        closeLogin();
+
+    }
+
+    if(event.target===cartModal){
+
+        closeCart();
+
+    }
+
+};
+
+</script>
 
 </body>
 </html>
