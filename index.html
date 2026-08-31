@@ -1066,6 +1066,56 @@ window.onclick=function(event){
 };
 
 </script>
+<!-- CHECKOUT FORM -->
+<div id="checkoutBox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:white; width:90%; max-width:420px; padding:25px; border-radius:12px;">
+    
+    <h2>Checkout</h2>
 
+    <input id="customerName" type="text" placeholder="Full Name"
+      style="width:100%;padding:12px;margin:7px 0;">
+
+    <input id="customerPhone" type="tel" placeholder="Phone Number"
+      style="width:100%;padding:12px;margin:7px 0;">
+
+    <textarea id="customerAddress" placeholder="Delivery Address"
+      style="width:100%;padding:12px;margin:7px 0;"></textarea>
+
+    <button onclick="placeOrder()"
+      style="width:100%;padding:13px;background:#ffd814;border:0;border-radius:8px;cursor:pointer;">
+      Place Order
+    </button>
+
+    <button onclick="closeCheckout()"
+      style="width:100%;padding:10px;margin-top:8px;cursor:pointer;">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+<script>
+function openCheckout(){
+  document.getElementById("checkoutBox").style.display="flex";
+}
+
+function closeCheckout(){
+  document.getElementById("checkoutBox").style.display="none";
+}
+
+function placeOrder(){
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+
+  if(!name || !phone || !address){
+    alert("Please complete all checkout information.");
+    return;
+  }
+
+  alert("Order placed successfully!");
+  closeCheckout();
+}
+</script>
 </body>
 </html>
