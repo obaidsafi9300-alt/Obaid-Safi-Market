@@ -335,7 +335,7 @@ onkeyup="liveSearch()"
 <div class="account" onclick="openLogin()">
 <span id="helloText">Sign In</span>
     
-<span onclick="openSignup()" style="margin-left:20px;">Sign Up</span>
+<span onclick="event.stopPropagation(); openSignup()" style="margin-left:20px;">Sign Up</span>
 </div>
 
 <div class="cart" onclick="openCart()">
