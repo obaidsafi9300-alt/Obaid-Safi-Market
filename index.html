@@ -3,313 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Obaid Safi Market</title>
 
 <style>
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f3f3f3;
-    color:#111;
+  font-family:Arial,sans-serif;
+  background:#071426;
+  color:white;
 }
 
-/* HEADER */
 header{
-    background:#131921;
-    color:white;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:12px 20px;
-    position:sticky;
-    top:0;
-    z-index:100;
+  background:#06101f;
+  padding:15px 4%;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid #1c3555;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
 .logo{
-    font-size:22px;
-    font-weight:bold;
-    white-space:nowrap;
-    cursor:pointer;
+  font-size:28px;
+  font-weight:bold;
+  min-width:220px;
 }
 
-.search-box{
-    flex:1;
-    display:flex;
+.logo span{
+  color:#ff2638;
 }
 
-.search-box input{
-    width:100%;
-    padding:12px;
-    border:none;
-    font-size:16px;
-    outline:none;
+.search{
+  flex:1;
+  display:flex;
+  min-width:250px;
 }
 
-.search-box button{
-    border:none;
-    background:#febd69;
-    padding:0 18px;
-    font-size:20px;
-    cursor:pointer;
+.search input{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px 0 0 8px;
+  outline:none;
 }
 
-.account,
-.cart{
-    cursor:pointer;
-    padding:7px;
-    white-space:nowrap;
+.search button{
+  padding:0 22px;
+  border:0;
+  background:#ff2638;
+  color:white;
+  border-radius:0 8px 8px 0;
+  cursor:pointer;
 }
 
-.account:hover,
-.cart:hover{
-    outline:1px solid white;
+.account-buttons{
+  display:flex;
+  gap:10px;
 }
 
-/* NAVIGATION */
+.account-buttons button{
+  padding:11px 17px;
+  border-radius:7px;
+  cursor:pointer;
+  color:white;
+}
+
+.signin{
+  background:transparent;
+  border:1px solid #5d7696;
+}
+
+.signup{
+  background:#ff2638;
+  border:1px solid #ff2638;
+}
+
 nav{
-    background:#232f3e;
-    padding:0 15px;
-    display:flex;
-    flex-wrap:wrap;
+  background:#0b1a30;
+  padding:12px 4%;
+  display:flex;
+  gap:25px;
+  overflow:auto;
+  white-space:nowrap;
 }
 
-nav button{
-    background:transparent;
-    border:none;
-    color:white;
-    padding:13px 14px;
-    cursor:pointer;
-    font-size:15px;
+nav a{
+  color:#dbe7f7;
+  text-decoration:none;
 }
 
-nav button:hover{
-    background:#37475a;
-}
-
-/* HERO */
 .hero{
-    min-height:340px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px 20px;
-    background:linear-gradient(#ffffff,#e9e9e9);
+  margin:25px auto;
+  width:92%;
+  min-height:360px;
+  border-radius:18px;
+  padding:55px;
+  display:flex;
+  align-items:center;
+  background:
+    radial-gradient(circle at 80% 40%,#263f85 0,#101d42 30%,transparent 55%),
+    linear-gradient(120deg,#0a1930,#07111f);
+  border:1px solid #203a60;
+}
+
+.hero-content{
+  max-width:620px;
 }
 
 .hero h1{
-    font-size:42px;
-    margin:0 0 18px;
+  font-size:52px;
+  margin-bottom:18px;
+}
+
+.hero h1 span{
+  color:#ff3045;
 }
 
 .hero p{
-    font-size:17px;
-    color:#555;
+  font-size:18px;
+  line-height:1.7;
+  color:#bdc9d9;
+  margin-bottom:25px;
 }
 
-.main-button{
-    margin-top:20px;
-    background:#ffd814;
-    border:1px solid #fcd200;
-    padding:14px 30px;
-    border-radius:8px;
-    font-size:17px;
-    cursor:pointer;
+.primary{
+  background:#ff2638;
+  color:white;
+  border:none;
+  padding:14px 24px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-right:10px;
 }
 
-.main-button:hover{
-    background:#f7ca00;
+.secondary{
+  background:transparent;
+  color:white;
+  border:1px solid #60728d;
+  padding:13px 24px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* CATEGORY SECTION */
-.section{
-    padding:30px;
-    max-width:1200px;
-    margin:auto;
+.features{
+  width:92%;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
 }
 
-.section h2{
-    margin-bottom:20px;
+.feature{
+  background:#0d1c32;
+  border:1px solid #1e3555;
+  border-radius:12px;
+  padding:20px;
+}
+
+.feature strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+.feature p{
+  color:#91a3bc;
+  font-size:14px;
+}
+
+section{
+  width:92%;
+  margin:35px auto;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.section-title h2{
+  font-size:27px;
+}
+
+.section-title a{
+  color:#ff4050;
+  text-decoration:none;
 }
 
 .categories{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
 }
 
 .category{
-    background:white;
-    padding:30px 15px;
-    text-align:center;
-    border-radius:8px;
-    box-shadow:0 1px 5px rgba(0,0,0,.15);
-    cursor:pointer;
-    font-size:18px;
-    font-weight:bold;
+  background:#0e1e35;
+  border:1px solid #213958;
+  border-radius:14px;
+  padding:25px 10px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
 }
 
 .category:hover{
-    transform:translateY(-2px);
+  transform:translateY(-4px);
+  border-color:#ff2638;
 }
 
-/* PRODUCTS */
-.product-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:20px;
+.category .icon{
+  font-size:38px;
+  margin-bottom:12px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:17px;
 }
 
 .product{
-    background:white;
-    border-radius:8px;
-    padding:18px;
-    box-shadow:0 1px 5px rgba(0,0,0,.15);
+  background:#0d1d33;
+  border:1px solid #213958;
+  border-radius:14px;
+  overflow:hidden;
 }
 
 .product-image{
-    height:140px;
-    background:#eee;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:6px;
-    font-size:50px;
+  height:170px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:70px;
+  background:linear-gradient(145deg,#142a49,#081426);
 }
 
-.product h3{
-    margin-bottom:5px;
+.product-info{
+  padding:15px;
 }
 
-.category-name{
-    color:#666;
-    font-size:14px;
+.product-info h3{
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.rating{
+  color:#ffc400;
+  margin-bottom:8px;
 }
 
 .price{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.deal{
-    color:#b12704;
-    font-weight:bold;
+  color:#ff4050;
+  font-size:21px;
+  font-weight:bold;
 }
 
 .product button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:20px;
-    background:#ffd814;
-    cursor:pointer;
+  width:100%;
+  margin-top:12px;
+  padding:10px;
+  border:0;
+  background:#ff2638;
+  color:white;
+  border-radius:7px;
+  cursor:pointer;
 }
 
-.product button:hover{
-    background:#f7ca00;
+.sellers{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
-/* MODAL */
+.seller{
+  padding:22px;
+  border:1px solid #213958;
+  background:#0d1d33;
+  border-radius:14px;
+}
+
+.verified{
+  color:#33df91;
+}
+
+.global{
+  background:linear-gradient(120deg,#0d1d38,#101f48);
+  border:1px solid #29466f;
+  border-radius:18px;
+  padding:40px;
+  text-align:center;
+}
+
+.global h2{
+  font-size:34px;
+  margin-bottom:12px;
+}
+
+.global p{
+  color:#9eb0c9;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  margin-top:30px;
+  gap:15px;
+}
+
+.stat{
+  background:#09182c;
+  padding:20px;
+  border-radius:12px;
+}
+
+.stat h3{
+  color:#36cfff;
+  font-size:27px;
+}
+
+footer{
+  margin-top:50px;
+  background:#040b15;
+  border-top:1px solid #1b304d;
+  padding:40px 4%;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:30px;
+}
+
+footer h3{
+  margin-bottom:13px;
+}
+
+footer p,footer a{
+  color:#8193aa;
+  line-height:2;
+  text-decoration:none;
+  display:block;
+}
+
+.copyright{
+  margin-top:30px;
+  border-top:1px solid #182940;
+  padding-top:20px;
+  text-align:center;
+  color:#70839b;
+}
+
 .modal{
-    display:none;
-    position:fixed;
-    z-index:500;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.6);
-    align-items:center;
-    justify-content:center;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:500;
+  justify-content:center;
+  align-items:center;
 }
 
 .modal-box{
-    background:white;
-    padding:25px;
-    width:90%;
-    max-width:420px;
-    border-radius:10px;
+  background:#0d1d33;
+  width:90%;
+  max-width:400px;
+  padding:30px;
+  border-radius:16px;
+  border:1px solid #29466f;
+}
+
+.modal-box h2{
+  margin-bottom:20px;
 }
 
 .modal-box input{
-    width:100%;
-    padding:12px;
-    margin:7px 0;
+  width:100%;
+  margin-bottom:12px;
+  padding:13px;
+  border-radius:7px;
+  border:1px solid #314c70;
+  background:#071426;
+  color:white;
 }
 
 .modal-box button{
-    padding:11px 20px;
-    margin-top:10px;
-    cursor:pointer;
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:7px;
+  background:#ff2638;
+  color:white;
+  cursor:pointer;
+  margin-top:5px;
 }
 
 .close{
-    float:right;
-    cursor:pointer;
-    font-size:25px;
+  float:right;
+  font-size:25px;
+  cursor:pointer;
 }
 
-/* CART */
-.cart-item{
-    border-bottom:1px solid #ddd;
-    padding:10px 0;
-    display:flex;
-    justify-content:space-between;
+@media(max-width:900px){
+  .hero{
+    padding:35px 25px;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+
+  .features{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .categories{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .sellers{
+    grid-template-columns:1fr;
+  }
+
+  .footer-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
-.remove{
-    color:red;
-    cursor:pointer;
-}
+@media(max-width:520px){
+  .logo{
+    font-size:23px;
+  }
 
-/* MESSAGE */
-#message{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#131921;
-    color:white;
-    padding:12px 22px;
-    border-radius:6px;
-    display:none;
-    z-index:1000;
-}
+  .hero{
+    min-height:300px;
+  }
 
-/* FOOTER */
-footer{
-    margin-top:40px;
-    background:#131921;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
+  .hero h1{
+    font-size:32px;
+  }
 
-@media(max-width:700px){
-    header{
-        flex-wrap:wrap;
-    }
+  .features{
+    grid-template-columns:1fr 1fr;
+  }
 
-    .search-box{
-        order:3;
-        width:100%;
-        flex-basis:100%;
-    }
+  .categories{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .hero h1{
-        font-size:30px;
-    }
+  .products{
+    grid-template-columns:1fr 1fr;
+  }
 
-    .section{
-        padding:20px 12px;
-    }
+  .product-image{
+    height:130px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -317,813 +489,365 @@ footer{
 <body>
 
 <header>
+  <div class="topbar">
 
-<div class="logo" onclick="goHome()">
-OBAID SAFI MARKET
-</div>
+    <div class="logo">
+      🛍️ Obaid Safi <span>Market</span>
+    </div>
 
-<div class="search-box">
-<input
-id="searchInput"
-type="text"
-placeholder="Search Obaid Safi Market"
-onkeyup="liveSearch()"
->
-<button onclick="searchProducts()">🔍</button>
-</div>
+    <div class="search">
+      <input type="text" placeholder="Search products, shops, brands...">
+      <button>🔍</button>
+    </div>
 
-<div class="account" onclick="openLogin()">
-<span id="helloText">Sign In</span>
-    
-<span onclick="newSignup()"
-    onclick="event.stopPropagation(); ()" style="margin-left:20px;">Sign Up</span>
-    <script>
-        function newSignup(){
-            alert("Sign Up is working!");
-   }    
-</script>    
-        
-</div>
+    <div class="account-buttons">
+      <button class="signin" onclick="openLogin()">Sign In</button>
+      <button class="signup" onclick="openSignup()">Sign Up</button>
+    </div>
 
-<div class="cart" onclick="openCart()">
-🛒 Cart (<span id="cartCount">0</span>)
-</div>
+    <div>🛒 Cart (0)</div>
 
+  </div>
 </header>
 
-
 <nav>
-
-<button onclick="showAll()">
-All
-</button>
-
-<button onclick="showDeals()">
-Today's Deals
-</button>
-
-<button onclick="filterCategory('Electronics')">
-Electronics
-</button>
-
-<button onclick="filterCategory('Fashion')">
-Fashion
-</button>
-
-<button onclick="filterCategory('Home')">
-Home
-</button>
-
-<button onclick="filterCategory('Beauty')">
-Beauty
-</button>
-
-<button onclick="showNewArrivals()">
-New Arrivals
-</button>
-
+  <a href="#">☰ All Categories</a>
+  <a href="#">Electronics</a>
+  <a href="#">Mobile Phones</a>
+  <a href="#">Computers</a>
+  <a href="#">Fashion</a>
+  <a href="#">Home & Kitchen</a>
+  <a href="#">Beauty</a>
+  <a href="#">Vehicles</a>
+  <a href="#">New Arrivals</a>
 </nav>
 
+<div class="hero">
+  <div class="hero-content">
+    <h1>Find Everything You Need <span>in One Place</span></h1>
 
-<section class="hero" id="home">
+    <p>
+      Discover products from sellers around the world.
+      Shop easily and explore the growing Obaid Safi Market.
+    </p>
 
-<h1>Welcome to Obaid Safi Market</h1>
+    <button class="primary">Start Shopping</button>
+    <button class="secondary">Become a Seller</button>
+  </div>
+</div>
 
-<p>
-Discover products from sellers around the world.
-Shop easily, securely and conveniently.
-</p>
+<div class="features">
 
-<button class="main-button" onclick="startShopping()">
-Start Shopping
-</button>
+  <div class="feature">
+    <strong>🌍 Global Access</strong>
+    <p>Marketplace designed for worldwide access.</p>
+  </div>
 
+  <div class="feature">
+    <strong>🛡️ Secure & Private</strong>
+    <p>Security-focused marketplace architecture.</p>
+  </div>
+
+  <div class="feature">
+    <strong>🏪 Multi-Vendor Market</strong>
+    <p>Independent sellers can operate their own stores.</p>
+  </div>
+
+  <div class="feature">
+    <strong>💬 Seller Messaging</strong>
+    <p>Buyers and sellers can communicate directly.</p>
+  </div>
+
+</div>
+
+<section>
+
+  <div class="section-title">
+    <h2>Top Categories</h2>
+    <a href="#">View All</a>
+  </div>
+
+  <div class="categories">
+
+    <div class="category">
+      <div class="icon">📱</div>
+      Smartphones
+    </div>
+
+    <div class="category">
+      <div class="icon">💻</div>
+      Laptops
+    </div>
+
+    <div class="category">
+      <div class="icon">👕</div>
+      Fashion
+    </div>
+
+    <div class="category">
+      <div class="icon">🏠</div>
+      Home
+    </div>
+
+    <div class="category">
+      <div class="icon">💄</div>
+      Beauty
+    </div>
+
+    <div class="category">
+      <div class="icon">🚗</div>
+      Vehicles
+    </div>
+
+  </div>
 </section>
 
+<section>
 
-<section class="section">
+  <div class="section-title">
+    <h2>Featured Products</h2>
+    <a href="#">See All</a>
+  </div>
 
-<h2>Shop by Category</h2>
+  <div class="products">
 
-<div class="categories">
+    <div class="product">
+      <div class="product-image">📱</div>
+      <div class="product-info">
+        <h3>Smartphone Pro</h3>
+        <div class="rating">★★★★★</div>
+        <div class="price">$899</div>
+        <button>Add to Cart</button>
+      </div>
+    </div>
 
-<div class="category"
-onclick="filterCategory('Electronics')">
-💻<br><br>Electronics
-</div>
+    <div class="product">
+      <div class="product-image">💻</div>
+      <div class="product-info">
+        <h3>Premium Laptop</h3>
+        <div class="rating">★★★★★</div>
+        <div class="price">$1,249</div>
+        <button>Add to Cart</button>
+      </div>
+    </div>
 
-<div class="category"
-onclick="filterCategory('Fashion')">
-👕<br><br>Fashion
-</div>
+    <div class="product">
+      <div class="product-image">🎧</div>
+      <div class="product-info">
+        <h3>Wireless Headphones</h3>
+        <div class="rating">★★★★☆</div>
+        <div class="price">$149</div>
+        <button>Add to Cart</button>
+      </div>
+    </div>
 
-<div class="category"
-onclick="filterCategory('Home')">
-🏠<br><br>Home
-</div>
+    <div class="product">
+      <div class="product-image">⌚</div>
+      <div class="product-info">
+        <h3>Smart Watch</h3>
+        <div class="rating">★★★★★</div>
+        <div class="price">$299</div>
+        <button>Add to Cart</button>
+      </div>
+    </div>
 
-<div class="category"
-onclick="filterCategory('Beauty')">
-✨<br><br>Beauty
-</div>
+    <div class="product">
+      <div class="product-image">📷</div>
+      <div class="product-info">
+        <h3>Digital Camera</h3>
+        <div class="rating">★★★★☆</div>
+        <div class="price">$649</div>
+        <button>Add to Cart</button>
+      </div>
+    </div>
 
-</div>
-
+  </div>
 </section>
 
+<section>
 
-<section class="section" id="productsSection">
+  <div class="section-title">
+    <h2>Popular Sellers</h2>
+  </div>
 
-<h2 id="productTitle">
-All Products
-</h2>
+  <div class="sellers">
 
-<div class="product-grid" id="productGrid">
+    <div class="seller">
+      <h3>🏪 Tech World</h3>
+      <p class="verified">✓ Verified Seller</p>
+      <p>Electronics & Computers</p>
+    </div>
 
+    <div class="seller">
+      <h3>👗 Global Fashion</h3>
+      <p class="verified">✓ Verified Seller</p>
+      <p>Clothing & Accessories</p>
+    </div>
 
-<div class="product"
-data-name="Smart Phone"
-data-category="Electronics"
-data-deal="true"
-data-new="true">
+    <div class="seller">
+      <h3>🏠 Home Center</h3>
+      <p class="verified">✓ Verified Seller</p>
+      <p>Home & Kitchen</p>
+    </div>
 
-<div class="product-image">📱</div>
-
-<h3>Smart Phone</h3>
-
-<p class="category-name">
-Electronics
-</p>
-
-<p class="price">
-$299
-</p>
-
-<p class="deal">
-Today's Deal
-</p>
-
-<button onclick="addToCart('Smart Phone',299)">
-Add to Cart
-</button>
-
-</div>
-
-
-<div class="product"
-data-name="Laptop Computer"
-data-category="Electronics"
-data-deal="false"
-data-new="true">
-
-<div class="product-image">💻</div>
-
-<h3>Laptop Computer</h3>
-
-<p class="category-name">
-Electronics
-</p>
-
-<p class="price">
-$599
-</p>
-
-<button onclick="addToCart('Laptop Computer',599)">
-Add to Cart
-</button>
-
-</div>
-
-
-<div class="product"
-data-name="Fashion Shoes"
-data-category="Fashion"
-data-deal="true"
-data-new="false">
-
-<div class="product-image">👟</div>
-
-<h3>Fashion Shoes</h3>
-
-<p class="category-name">
-Fashion
-</p>
-
-<p class="price">
-$49
-</p>
-
-<p class="deal">
-Today's Deal
-</p>
-
-<button onclick="addToCart('Fashion Shoes',49)">
-Add to Cart
-</button>
-
-</div>
-
-
-<div class="product"
-data-name="Men Shirt"
-data-category="Fashion"
-data-deal="false"
-data-new="true">
-
-<div class="product-image">👕</div>
-
-<h3>Men Shirt</h3>
-
-<p class="category-name">
-Fashion
-</p>
-
-<p class="price">
-$25
-</p>
-
-<button onclick="addToCart('Men Shirt',25)">
-Add to Cart
-</button>
-
-</div>
-
-
-<div class="product"
-data-name="Home Lamp"
-data-category="Home"
-data-deal="true"
-data-new="false">
-
-<div class="product-image">💡</div>
-
-<h3>Home Lamp</h3>
-
-<p class="category-name">
-Home
-</p>
-
-<p class="price">
-$35
-</p>
-
-<p class="deal">
-Today's Deal
-</p>
-
-<button onclick="addToCart('Home Lamp',35)">
-Add to Cart
-</button>
-
-</div>
-
-
-<div class="product"
-data-name="Beauty Perfume"
-data-category="Beauty"
-data-deal="false"
-data-new="true">
-
-<div class="product-image">🌸</div>
-
-<h3>Beauty Perfume</h3>
-
-<p class="category-name">
-Beauty
-</p>
-
-<p class="price">
-$45
-</p>
-
-<button onclick="addToCart('Beauty Perfume',45)">
-Add to Cart
-</button>
-
-</div>
-
-
-</div>
-
+  </div>
 </section>
 
+<section>
 
-<!-- LOGIN -->
+  <div class="global">
 
-<div class="modal" id="loginModal">
+    <h2>🌍 Obaid Safi Market</h2>
 
-<div class="modal-box">
+    <p>A marketplace built to grow from local sellers to a worldwide network.</p>
 
-<span class="close"
-onclick="closeLogin()">
-&times;
-</span>
+    <div class="stats">
 
-<h2>Sign in</h2>
+      <div class="stat">
+        <h3>Global</h3>
+        <p>Access</p>
+      </div>
 
-<input
-id="userName"
-type="text"
-placeholder="Your name"
->
+      <div class="stat">
+        <h3>24/7</h3>
+        <p>Marketplace</p>
+      </div>
 
-<input
-id="email"
-type="email"
-placeholder="Email"
->
+      <div class="stat">
+        <h3>Multi</h3>
+        <p>Vendor</p>
+      </div>
 
-<input
-id="password"
-type="password"
-placeholder="Password"
->
+      <div class="stat">
+        <h3>Secure</h3>
+        <p>System</p>
+      </div>
 
-<button onclick="login()">
-Sign in
-</button>
+    </div>
 
-</div>
+  </div>
 
-</div>
-
-
-<!-- CART -->
-
-<div class="modal" id="cartModal">
-
-<div class="modal-box">
-
-<span class="close"
-onclick="closeCart()">
-&times;
-</span>
-
-<h2>Your Cart</h2>
-
-<div id="cartItems"></div>
-
-<h3>
-Total: $<span id="cartTotal">0</span>
-</h3>
-
-<button onclick="checkout()">
-Proceed to Checkout
-</button>
-
-</div>
-
-</div>
-
-
-<div id="message"></div>
-
+</section>
 
 <footer>
 
-<h3>OBAID SAFI MARKET</h3>
+  <div class="footer-grid">
 
-<p>
-Global Marketplace
-</p>
+    <div>
+      <h2>Obaid Safi Market</h2>
+      <p>
+        A growing online marketplace connecting buyers and sellers.
+      </p>
+    </div>
 
-<p>
-© 2026 Obaid Safi Market
-</p>
+    <div>
+      <h3>Marketplace</h3>
+      <a href="#">Categories</a>
+      <a href="#">Products</a>
+      <a href="#">Sellers</a>
+      <a href="#">New Arrivals</a>
+    </div>
+
+    <div>
+      <h3>Account</h3>
+      <a href="#">Sign In</a>
+      <a href="#">Sign Up</a>
+      <a href="#">Become a Seller</a>
+      <a href="#">My Account</a>
+    </div>
+
+    <div>
+      <h3>Help</h3>
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Security</a>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 Obaid Safi Market. All rights reserved.
+  </div>
 
 </footer>
 
 
+<!-- SIGN IN -->
+
+<div class="modal" id="loginModal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeLogin()">×</span>
+
+    <h2>Sign In</h2>
+
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+
+    <button>Sign In</button>
+
+  </div>
+
+</div>
+
+
+<!-- SIGN UP -->
+
+<div class="modal" id="signupModal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeSignup()">×</span>
+
+    <h2>Create Account</h2>
+
+    <input type="text" placeholder="Full Name">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <input type="password" placeholder="Confirm Password">
+
+    <button>Create Account</button>
+
+  </div>
+
+</div>
+
+
 <script>
 
-let cart = [];
-
-function startShopping(){
-
-    document
-    .getElementById("productsSection")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-function goHome(){
-
-    document
-    .getElementById("home")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-    showAll();
-
-}
-
-
-function showAll(){
-
-    document.getElementById("productTitle")
-    .innerText="All Products";
-
-    document
-    .querySelectorAll(".product")
-    .forEach(function(product){
-
-        product.style.display="block";
-
-    });
-
-    scrollProducts();
-
-}
-
-
-function filterCategory(category){
-
-    document.getElementById("productTitle")
-    .innerText=category;
-
-    document
-    .querySelectorAll(".product")
-    .forEach(function(product){
-
-        if(product.dataset.category===category){
-
-            product.style.display="block";
-
-        }else{
-
-            product.style.display="none";
-
-        }
-
-    });
-
-    scrollProducts();
-
-}
-
-
-function showDeals(){
-
-    document.getElementById("productTitle")
-    .innerText="Today's Deals";
-
-    document
-    .querySelectorAll(".product")
-    .forEach(function(product){
-
-        product.style.display =
-        product.dataset.deal==="true"
-        ? "block"
-        : "none";
-
-    });
-
-    scrollProducts();
-
-}
-
-
-function showNewArrivals(){
-
-    document.getElementById("productTitle")
-    .innerText="New Arrivals";
-
-    document
-    .querySelectorAll(".product")
-    .forEach(function(product){
-
-        product.style.display =
-        product.dataset.new==="true"
-        ? "block"
-        : "none";
-
-    });
-
-    scrollProducts();
-
-}
-
-
-function liveSearch(){
-
-    let text =
-    document
-    .getElementById("searchInput")
-    .value
-    .toLowerCase();
-
-    document
-    .querySelectorAll(".product")
-    .forEach(function(product){
-
-        let name =
-        product.dataset.name.toLowerCase();
-
-        product.style.display =
-        name.includes(text)
-        ? "block"
-        : "none";
-
-    });
-
-}
-
-
-function searchProducts(){
-
-    liveSearch();
-
-    document.getElementById("productTitle")
-    .innerText="Search Results";
-
-    scrollProducts();
-
-}
-
-
-function scrollProducts(){
-
-    document
-    .getElementById("productsSection")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-function addToCart(name,price){
-
-    cart.push({
-        name:name,
-        price:price
-    });
-
-    updateCart();
-
-    showMessage(
-        name+" added to cart"
-    );
-
-}
-
-
-function updateCart(){
-
-    document
-    .getElementById("cartCount")
-    .innerText=cart.length;
-
-}
-
-
-function openCart(){
-
-    document
-    .getElementById("cartModal")
-    .style.display="flex";
-
-    renderCart();
-
-}
-
-
-function closeCart(){
-
-    document
-    .getElementById("cartModal")
-    .style.display="none";
-
-}
-
-
-function renderCart(){
-
-    let box =
-    document.getElementById("cartItems");
-
-    box.innerHTML="";
-
-    let total=0;
-
-    if(cart.length===0){
-
-        box.innerHTML=
-        "<p>Your cart is empty.</p>";
-
-    }
-
-    cart.forEach(function(item,index){
-
-        total+=item.price;
-
-        box.innerHTML+=
-        '<div class="cart-item">'+
-        '<span>'+item.name+
-        ' - $'+item.price+'</span>'+
-        '<span class="remove" onclick="removeCart('+index+')">Remove</span>'+
-        '</div>';
-
-    });
-
-    document
-    .getElementById("cartTotal")
-    .innerText=total.toFixed(2);
-
-}
-
-
-function removeCart(index){
-
-    cart.splice(index,1);
-
-    updateCart();
-
-    renderCart();
-
-}
-
-
-function checkout(){
-
-    if(cart.length===0){
-
-        showMessage(
-            "Your cart is empty."
-        );
-
-        return;
-
-    }
-
-    closeCart();
-
-    showMessage(
-        "Checkout opened successfully."
-    );
-
-}
-
-
 function openLogin(){
-
-    document
-    .getElementById("loginModal")
-    .style.display="flex";
-
+  document.getElementById("loginModal").style.display="flex";
 }
-
 
 function closeLogin(){
-
-    document
-    .getElementById("loginModal")
-    .style.display="none";
-
+  document.getElementById("loginModal").style.display="none";
 }
 
-
-function login(){
-
-    let name =
-    document
-    .getElementById("userName")
-    .value.trim();
-
-    let email =
-    document
-    .getElementById("email")
-    .value.trim();
-
-    let password =
-    document
-    .getElementById("password")
-    .value;
-
-    if(
-        name==="" ||
-        email==="" ||
-        password===""
-    ){
-
-        showMessage(
-            "Please complete all fields."
-        );
-
-        return;
-
-    }
-
-    document
-    .getElementById("helloText")
-    .innerText="Hello, "+name;
-
-    closeLogin();
-
-    showMessage(
-        "Signed in successfully."
-    );
-
+function openSignup(){
+  document.getElementById("signupModal").style.display="flex";
 }
 
-
-function showMessage(text){
-
-    let message =
-    document.getElementById("message");
-
-    message.innerText=text;
-
-    message.style.display="block";
-
-    setTimeout(function(){
-
-        message.style.display="none";
-
-    },2500);
-
+function closeSignup(){
+  document.getElementById("signupModal").style.display="none";
 }
-
-
-/* Close windows when clicking outside */
 
 window.onclick=function(event){
 
-    let loginModal=
-    document.getElementById("loginModal");
+  const login=document.getElementById("loginModal");
+  const signup=document.getElementById("signupModal");
 
-    let cartModal=
-    document.getElementById("cartModal");
-
-    if(event.target===loginModal){
-
-        closeLogin();
-
-    }
-
-    if(event.target===cartModal){
-
-        closeCart();
-
-    }
-
-};
-
-</script>
-<!-- CHECKOUT FORM -->
-<div id="checkoutBox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:white; width:90%; max-width:420px; padding:25px; border-radius:12px;">
-    
-    <h2>Checkout</h2>
-
-    <input id="customerName" type="text" placeholder="Full Name"
-      style="width:100%;padding:12px;margin:7px 0;">
-
-    <input id="customerPhone" type="tel" placeholder="Phone Number"
-      style="width:100%;padding:12px;margin:7px 0;">
-
-    <textarea id="customerAddress" placeholder="Delivery Address"
-      style="width:100%;padding:12px;margin:7px 0;"></textarea>
-
-    <button onclick="placeOrder()"
-      style="width:100%;padding:13px;background:#ffd814;border:0;border-radius:8px;cursor:pointer;">
-      Place Order
-    </button>
-
-    <button onclick="closeCheckout()"
-      style="width:100%;padding:10px;margin-top:8px;cursor:pointer;">
-      Cancel
-    </button>
-
-  </div>
-</div>
-
-<script>
-function openCheckout(){
-  document.getElementById("checkoutBox").style.display="flex";
-}
-
-function closeCheckout(){
-  document.getElementById("checkoutBox").style.display="none";
-}
-
-function placeOrder(){
-  const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
-  const address = document.getElementById("customerAddress").value.trim();
-
-  if(!name || !phone || !address){
-    alert("Please complete all checkout information.");
-    return;
+  if(event.target===login){
+    login.style.display="none";
   }
 
-  alert("Order placed successfully!");
-  closeCheckout();
+  if(event.target===signup){
+    signup.style.display="none";
+  }
 }
+
 </script>
+
 </body>
-</html>
+</html
