@@ -1,214 +1,336 @@
-let selfieBlob = null;
+<script>
+/* ================================
+   OBAID SAFI MARKET - CORE SYSTEM
+================================ */
 
-async function startCamera(){
+/* CART */
+let cart = JSON.parse(localStorage.getItem("obaidSafiCart")) || [];
 
-  try{
-
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-        video:{
-          facingMode:"user"
-        },
-        audio:false
-      });
-
-    document.getElementById("selfieVideo").srcObject = stream;
-
-  }catch(error){
-
-    showNotice("Camera permission is required");
-
-  }
-
+function saveCart() {
+    localStorage.setItem("obaidSafiCart", JSON.stringify(cart));
+    updateCartCount();
 }
 
+function updateCartCount() {
+    const count = cart.reduce((total, item) => total + (item.qty || 1), 0);
 
-function captureSelfie(){
-
-  const video =
-    document.getElementById("selfieVideo");
-
-  const canvas =
-    document.getElementById("selfieCanvas");
-
-  if(!video.videoWidth){
-
-    showNotice("Open camera first");
-
-    return;
-
-  }
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  const ctx = canvas.getContext("2d");
-
-  ctx.drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  canvas.toBlob(function(blob){
-
-    selfieBlob = blob;
-
-    document.getElementById(
-      "selfieStatus"
-    ).textContent = "✓ Selfie captured";
-
-  },"image/jpeg",0.9);
-
-}
-
-
-async function submitVerification(){
-
-  const name =
-    document.getElementById("signupName").value.trim();
-
-  const email =
-    document.getElementById("signupEmail").value.trim();
-
-  const password =
-    document.getElementById("signupPassword").value;
-
-  const country =
-    document.getElementById("signupCountry").value;
-
-  const idType =
-    document.getElementById("idType").value;
-
-  const front =
-    document.getElementById("idFront").files[0];
-
-  const back =
-    document.getElementById("idBack").files[0];
-
-  const consent =
-    document.getElementById(
-      "verificationConsent"
-    ).checked;
-
-
-  if(!name ||
-     !email ||
-     !password ||
-     !country ||
-     !idType){
-
-    showNotice("Complete all account fields");
-
-    return;
-
-  }
-
-
-  if(!front){
-
-    showNotice("Upload ID front");
-
-    return;
-
-  }
-
-
-  if(idType !== "passport" && !back){
-
-    showNotice("Upload ID back");
-
-    return;
-
-  }
-
-
-  if(!selfieBlob){
-
-    showNotice("Take a live selfie");
-
-    return;
-
-  }
-
-
-  if(!consent){
-
-    showNotice("Verification consent required");
-
-    return;
-
-  }
-
-
-  const form = new FormData();
-
-  form.append("name",name);
-  form.append("email",email);
-  form.append("password",password);
-  form.append("country",country);
-  form.append("id_type",idType);
-
-  form.append("id_front",front);
-
-  if(back){
-    form.append("id_back",back);
-  }
-
-  form.append(
-    "selfie",
-    selfieBlob,
-    "selfie.jpg"
-  );
-
-
-  /*
-  IMPORTANT:
-
-  This must point to YOUR OWN
-  self-hosted server later.
-
-  Example:
-
-  http://YOUR-SERVER-IP:8000/api/register
-  */
-
-  try{
-
-    const response = await fetch(
-      "/api/register",
-      {
-        method:"POST",
-        body:form
-      }
+    const cartElements = document.querySelectorAll(
+        "#cartCount, .cart-count, [data-cart-count]"
     );
 
-    const result = await response.json();
+    cartElements.forEach(el => {
+        el.textContent = count;
+    });
 
-    if(response.ok){
+    /* Also update text such as Cart (0) */
+    document.querySelectorAll("a, button, div, span").forEach(el => {
+        if (
+            el.children.length === 0 &&
+            /^\s*(🛒\s*)?Cart\s*\(\d+\)\s*$/i.test(el.textContent)
+        ) {
+            const hasEmoji = el.textContent.includes("🛒");
+            el.textContent = (hasEmoji ? "🛒 " : "") + "Cart (" + count + ")";
+        }
+    });
+}
 
-      closeModal("signupModal");
+/* ADD TO CART */
+function addToCart(name, price, image = "") {
 
-      showNotice(
-        "Account created. Verification pending."
-      );
+    if (!name) name = "Product";
 
-    }else{
+    price = Number(
+        String(price || 0)
+        .replace("$", "")
+        .replace("£", "")
+        .replace(",", "")
+    );
 
-      showNotice(
-        result.message || "Verification failed"
-      );
+    const existing = cart.find(item => item.name === name);
 
+    if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            image: image,
+            qty: 1
+        });
     }
 
-  }catch(error){
+    saveCart();
+    showNotice(name + " added to cart ✓");
+}
 
-    showNotice(
-      "Self-hosted verification server is not connected yet"
+/* AUTOMATICALLY ACTIVATE EXISTING ADD TO CART BUTTONS */
+document.addEventListener("click", function(event) {
+
+    const button = event.target.closest("button, a");
+
+    if (!button) return;
+
+    const text = button.textContent.trim().toLowerCase();
+
+    if (text === "add to cart" || text.includes("add to cart")) {
+
+        /* If button already has its own working onclick, leave it */
+        if (button.getAttribute("onclick")) return;
+
+        event.preventDefault();
+
+        const card = button.closest(
+            ".product-card, .product, .card, article, li"
+        );
+
+        let name = "Product";
+        let price = 0;
+        let image = "";
+
+        if (card) {
+
+            const nameElement = card.querySelector(
+                "h1, h2, h3, h4, .product-name, .product-title"
+            );
+
+            const priceElement = card.querySelector(
+                ".price, .product-price"
+            );
+
+            const imageElement = card.querySelector("img");
+
+            if (nameElement) {
+                name = nameElement.textContent.trim();
+            }
+
+            if (priceElement) {
+                const match = priceElement.textContent.match(
+                    /[\d,.]+/
+                );
+
+                if (match) {
+                    price = Number(
+                        match[0].replace(",", "")
+                    );
+                }
+            }
+
+            if (imageElement) {
+                image = imageElement.src;
+            }
+        }
+
+        addToCart(name, price, image);
+    }
+});
+
+/* SEARCH */
+function searchProducts() {
+
+    const input =
+        document.getElementById("searchInput") ||
+        document.querySelector(
+            'input[type="search"], input[placeholder*="Search"], input[placeholder*="search"]'
+        );
+
+    if (!input) return;
+
+    const query = input.value.trim().toLowerCase();
+
+    const products = document.querySelectorAll(
+        ".product-card, .product"
     );
 
-  }
+    products.forEach(product => {
 
+        const text = product.textContent.toLowerCase();
+
+        if (!query || text.includes(query)) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+
+    });
 }
+
+/* SEARCH BUTTON */
+document.addEventListener("click", function(event) {
+
+    const button = event.target.closest("button");
+
+    if (!button) return;
+
+    const text = button.textContent.trim();
+
+    if (
+        text === "🔍" ||
+        button.classList.contains("search-btn")
+    ) {
+        searchProducts();
+    }
+});
+
+/* ENTER TO SEARCH */
+document.addEventListener("keydown", function(event) {
+
+    const input =
+        document.getElementById("searchInput") ||
+        document.querySelector(
+            'input[type="search"], input[placeholder*="Search"], input[placeholder*="search"]'
+        );
+
+    if (
+        input &&
+        document.activeElement === input &&
+        event.key === "Enter"
+    ) {
+        searchProducts();
+    }
+});
+
+/* SIGN UP */
+function openSignup() {
+
+    const modal = document.getElementById("signupModal");
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function closeSignup() {
+
+    const modal = document.getElementById("signupModal");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+/* SIGN IN */
+function openLogin() {
+
+    const modal = document.getElementById("loginModal");
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function closeLogin() {
+
+    const modal = document.getElementById("loginModal");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+/* ACTIVATE SIGN IN / SIGN UP BUTTONS */
+document.addEventListener("click", function(event) {
+
+    const element = event.target.closest("button, a, span");
+
+    if (!element) return;
+
+    const text = element.textContent.trim().toLowerCase();
+
+    if (text === "sign up") {
+        event.preventDefault();
+        openSignup();
+    }
+
+    if (text === "sign in") {
+        event.preventDefault();
+        openLogin();
+    }
+});
+
+/* CLOSE MODALS BY CLICKING BACKGROUND */
+window.addEventListener("click", function(event) {
+
+    const login = document.getElementById("loginModal");
+    const signup = document.getElementById("signupModal");
+
+    if (login && event.target === login) {
+        login.style.display = "none";
+    }
+
+    if (signup && event.target === signup) {
+        signup.style.display = "none";
+    }
+});
+
+/* NOTICE */
+function showNotice(message) {
+
+    let notice = document.getElementById("marketNotice");
+
+    if (!notice) {
+
+        notice = document.createElement("div");
+
+        notice.id = "marketNotice";
+
+        notice.style.position = "fixed";
+        notice.style.bottom = "25px";
+        notice.style.left = "50%";
+        notice.style.transform = "translateX(-50%)";
+        notice.style.background = "#10243d";
+        notice.style.color = "white";
+        notice.style.padding = "14px 22px";
+        notice.style.borderRadius = "10px";
+        notice.style.zIndex = "999999";
+        notice.style.fontSize = "16px";
+        notice.style.boxShadow =
+            "0 8px 30px rgba(0,0,0,.4)";
+
+        document.body.appendChild(notice);
+    }
+
+    notice.textContent = message;
+    notice.style.display = "block";
+
+    clearTimeout(window.marketNoticeTimer);
+
+    window.marketNoticeTimer = setTimeout(function() {
+        notice.style.display = "none";
+    }, 2000);
+}
+
+/* START SHOPPING */
+document.addEventListener("click", function(event) {
+
+    const button = event.target.closest("button, a");
+
+    if (!button) return;
+
+    if (
+        button.textContent
+        .trim()
+        .toLowerCase()
+        .includes("start shopping")
+    ) {
+
+        const products =
+            document.querySelector(
+                ".featured-products, #products, .products"
+            );
+
+        if (products) {
+            products.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }
+});
+
+/* INITIALIZE */
+document.addEventListener("DOMContentLoaded", function() {
+    updateCartCount();
+});
+
+updateCartCount();
+
+</script>
