@@ -2,486 +2,157 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Obaid Safi Market</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#061224;
+--panel:#0d213a;
+--panel2:#102944;
+--red:#ff2638;
+--blue:#32c8ff;
+--green:#28db83;
+--text:#fff;
+--muted:#9aaac0;
+--border:#254668
 }
-
-body{
-  font-family:Arial,sans-serif;
-  background:#071426;
-  color:white;
-}
-
+body{font-family:Arial,sans-serif;background:var(--bg);color:white}
+button{cursor:pointer}
 header{
-  background:#06101f;
-  padding:15px 4%;
-  position:sticky;
-  top:0;
-  z-index:100;
-  border-bottom:1px solid #1c3555;
+background:#030d1d;
+padding:18px 4%;
+border-bottom:1px solid var(--border);
+position:sticky;top:0;z-index:50
 }
-
-.topbar{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  flex-wrap:wrap;
+.top{
+display:flex;align-items:center;gap:18px;flex-wrap:wrap
 }
-
-.logo{
-  font-size:28px;
-  font-weight:bold;
-  min-width:220px;
-}
-
-.logo span{
-  color:#ff2638;
-}
-
-.search{
-  flex:1;
-  display:flex;
-  min-width:250px;
-}
-
+.logo{font-size:28px;font-weight:800}
+.logo span{color:var(--red)}
+.search{display:flex;flex:1;min-width:250px}
 .search input{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:8px 0 0 8px;
-  outline:none;
+flex:1;padding:14px;border:0;border-radius:9px 0 0 9px;
+outline:0;font-size:16px
 }
-
 .search button{
-  padding:0 22px;
-  border:0;
-  background:#ff2638;
-  color:white;
-  border-radius:0 8px 8px 0;
-  cursor:pointer;
+border:0;padding:0 22px;background:var(--red);color:#fff;
+border-radius:0 9px 9px 0;font-size:18px
 }
-
-.account-buttons{
-  display:flex;
-  gap:10px;
+.btn{
+padding:11px 17px;border-radius:8px;border:1px solid #526b8c;
+background:transparent;color:white
 }
-
-.account-buttons button{
-  padding:11px 17px;
-  border-radius:7px;
-  cursor:pointer;
-  color:white;
-}
-
-.signin{
-  background:transparent;
-  border:1px solid #5d7696;
-}
-
-.signup{
-  background:#ff2638;
-  border:1px solid #ff2638;
-}
-
+.red{background:var(--red);border-color:var(--red)}
+.cart{font-size:18px;cursor:pointer}
 nav{
-  background:#0b1a30;
-  padding:12px 4%;
-  display:flex;
-  gap:25px;
-  overflow:auto;
-  white-space:nowrap;
+padding:13px 4%;background:#0a1a31;display:flex;gap:25px;
+overflow:auto;white-space:nowrap
 }
-
-nav a{
-  color:#dbe7f7;
-  text-decoration:none;
+nav button{
+border:0;background:transparent;color:#d5e0ef;font-size:16px
 }
-
 .hero{
-  margin:25px auto;
-  width:92%;
-  min-height:360px;
-  border-radius:18px;
-  padding:55px;
-  display:flex;
-  align-items:center;
-  background:
-    radial-gradient(circle at 80% 40%,#263f85 0,#101d42 30%,transparent 55%),
-    linear-gradient(120deg,#0a1930,#07111f);
-  border:1px solid #203a60;
+width:92%;margin:28px auto;padding:50px;border-radius:20px;
+background:radial-gradient(circle at 85% 50%,#243d89,transparent 42%),
+linear-gradient(120deg,#0c2342,#071426);
+border:1px solid #284a70
 }
-
-.hero-content{
-  max-width:620px;
+.hero h1{font-size:48px;max-width:650px}
+.hero h1 span{color:var(--red)}
+.hero p{color:#b5c1d1;font-size:18px;line-height:1.7;max-width:650px;margin:18px 0}
+.features,.categories,.products,.sellers{
+width:92%;margin:25px auto;display:grid;gap:16px
 }
-
-.hero h1{
-  font-size:52px;
-  margin-bottom:18px;
+.features{grid-template-columns:repeat(4,1fr)}
+.feature,.category,.seller{
+background:var(--panel);border:1px solid var(--border);
+border-radius:15px;padding:20px
 }
-
-.hero h1 span{
-  color:#ff3045;
-}
-
-.hero p{
-  font-size:18px;
-  line-height:1.7;
-  color:#bdc9d9;
-  margin-bottom:25px;
-}
-
-.primary{
-  background:#ff2638;
-  color:white;
-  border:none;
-  padding:14px 24px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-right:10px;
-}
-
-.secondary{
-  background:transparent;
-  color:white;
-  border:1px solid #60728d;
-  padding:13px 24px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.features{
-  width:92%;
-  margin:20px auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-}
-
-.feature{
-  background:#0d1c32;
-  border:1px solid #1e3555;
-  border-radius:12px;
-  padding:20px;
-}
-
-.feature strong{
-  display:block;
-  margin-bottom:7px;
-}
-
-.feature p{
-  color:#91a3bc;
-  font-size:14px;
-}
-
-section{
-  width:92%;
-  margin:35px auto;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-.section-title h2{
-  font-size:27px;
-}
-
-.section-title a{
-  color:#ff4050;
-  text-decoration:none;
-}
-
-.categories{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
-}
-
-.category{
-  background:#0e1e35;
-  border:1px solid #213958;
-  border-radius:14px;
-  padding:25px 10px;
-  text-align:center;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.category:hover{
-  transform:translateY(-4px);
-  border-color:#ff2638;
-}
-
-.category .icon{
-  font-size:38px;
-  margin-bottom:12px;
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:17px;
-}
-
+.feature p,.seller p{color:var(--muted);margin-top:7px}
+section{width:92%;margin:40px auto}
+.title{display:flex;justify-content:space-between;margin-bottom:18px}
+.title h2{font-size:28px}
+.categories{width:100%;grid-template-columns:repeat(6,1fr);margin:0}
+.category{text-align:center;font-size:17px;cursor:pointer}
+.category b{display:block;font-size:35px;margin-bottom:10px}
+.category:hover{border-color:var(--red)}
+.products{width:100%;grid-template-columns:repeat(4,1fr);margin:0}
 .product{
-  background:#0d1d33;
-  border:1px solid #213958;
-  border-radius:14px;
-  overflow:hidden;
+background:var(--panel);border:1px solid var(--border);
+border-radius:15px;overflow:hidden
 }
-
-.product-image{
-  height:170px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:70px;
-  background:linear-gradient(145deg,#142a49,#081426);
+.product-img{
+height:170px;display:flex;align-items:center;justify-content:center;
+font-size:70px;background:linear-gradient(145deg,#163352,#0a1729)
 }
-
-.product-info{
-  padding:15px;
+.product-body{padding:17px}
+.product h3{margin-bottom:10px}
+.rating{color:#ffc400}
+.price{font-size:23px;color:#ff4355;font-weight:bold;margin:10px 0}
+.product-actions{display:flex;gap:7px}
+.product-actions button{
+flex:1;padding:10px;border:0;border-radius:7px;color:white
 }
-
-.product-info h3{
-  font-size:16px;
-  margin-bottom:8px;
-}
-
-.rating{
-  color:#ffc400;
-  margin-bottom:8px;
-}
-
-.price{
-  color:#ff4050;
-  font-size:21px;
-  font-weight:bold;
-}
-
-.product button{
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border:0;
-  background:#ff2638;
-  color:white;
-  border-radius:7px;
-  cursor:pointer;
-}
-
-.sellers{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.seller{
-  padding:22px;
-  border:1px solid #213958;
-  background:#0d1d33;
-  border-radius:14px;
-}
-
-.verified{
-  color:#33df91;
-}
-
+.add{background:var(--red)}
+.msg{background:#1678dc}
+.sellers{width:100%;grid-template-columns:repeat(3,1fr);margin:0}
+.verified{color:var(--green)!important}
 .global{
-  background:linear-gradient(120deg,#0d1d38,#101f48);
-  border:1px solid #29466f;
-  border-radius:18px;
-  padding:40px;
-  text-align:center;
+background:linear-gradient(120deg,#10264d,#111c45);
+border:1px solid #315b88;border-radius:20px;padding:38px;text-align:center
 }
-
-.global h2{
-  font-size:34px;
-  margin-bottom:12px;
-}
-
-.global p{
-  color:#9eb0c9;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  margin-top:30px;
-  gap:15px;
-}
-
-.stat{
-  background:#09182c;
-  padding:20px;
-  border-radius:12px;
-}
-
-.stat h3{
-  color:#36cfff;
-  font-size:27px;
-}
-
-footer{
-  margin-top:50px;
-  background:#040b15;
-  border-top:1px solid #1b304d;
-  padding:40px 4%;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:30px;
-}
-
-footer h3{
-  margin-bottom:13px;
-}
-
-footer p,footer a{
-  color:#8193aa;
-  line-height:2;
-  text-decoration:none;
-  display:block;
-}
-
-.copyright{
-  margin-top:30px;
-  border-top:1px solid #182940;
-  padding-top:20px;
-  text-align:center;
-  color:#70839b;
-}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:25px}
+.stat{background:#07172b;padding:22px;border-radius:13px}
+.stat h3{color:var(--blue);font-size:26px}
+footer{margin-top:50px;background:#020a14;padding:40px 4%;color:#8fa0b8}
 
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  z-index:500;
-  justify-content:center;
-  align-items:center;
+display:none;position:fixed;inset:0;background:#000b;
+z-index:200;align-items:center;justify-content:center;padding:20px
 }
-
-.modal-box{
-  background:#0d1d33;
-  width:90%;
-  max-width:400px;
-  padding:30px;
-  border-radius:16px;
-  border:1px solid #29466f;
+.box{
+background:#0e2744;border:1px solid #315579;border-radius:18px;
+padding:28px;width:100%;max-width:430px
 }
-
-.modal-box h2{
-  margin-bottom:20px;
+.box h2{margin-bottom:18px}
+.close{float:right;font-size:28px;cursor:pointer}
+.box input,.box textarea{
+width:100%;padding:13px;margin:7px 0;background:#07182c;
+border:1px solid #355577;border-radius:8px;color:#fff
 }
-
-.modal-box input{
-  width:100%;
-  margin-bottom:12px;
-  padding:13px;
-  border-radius:7px;
-  border:1px solid #314c70;
-  background:#071426;
-  color:white;
+.box button{
+width:100%;padding:13px;margin-top:10px;border:0;border-radius:8px;
+background:var(--red);color:white
 }
-
-.modal-box button{
-  width:100%;
-  padding:13px;
-  border:0;
-  border-radius:7px;
-  background:#ff2638;
-  color:white;
-  cursor:pointer;
-  margin-top:5px;
+.cart-item{
+display:flex;justify-content:space-between;align-items:center;
+padding:12px 0;border-bottom:1px solid #29445f
 }
-
-.close{
-  float:right;
-  font-size:25px;
-  cursor:pointer;
+.notice{
+position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+background:#173755;color:white;padding:13px 20px;border-radius:9px;
+display:none;z-index:500
 }
 
 @media(max-width:900px){
-  .hero{
-    padding:35px 25px;
-  }
-
-  .hero h1{
-    font-size:38px;
-  }
-
-  .features{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .categories{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .products{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .sellers{
-    grid-template-columns:1fr;
-  }
-
-  .footer-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+.features{grid-template-columns:repeat(2,1fr)}
+.categories{grid-template-columns:repeat(3,1fr)}
+.products{grid-template-columns:repeat(2,1fr)}
+.sellers{grid-template-columns:1fr}
+.hero h1{font-size:38px}
 }
-
 @media(max-width:520px){
-  .logo{
-    font-size:23px;
-  }
-
-  .hero{
-    min-height:300px;
-  }
-
-  .hero h1{
-    font-size:32px;
-  }
-
-  .features{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .categories{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .products{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .product-image{
-    height:130px;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
+.logo{font-size:24px}
+.hero{padding:30px 22px}
+.hero h1{font-size:33px}
+.categories{grid-template-columns:repeat(2,1fr)}
+.products{grid-template-columns:repeat(2,1fr)}
+.product-img{height:130px}
+.product-actions{display:block}
+.product-actions button{width:100%;margin-top:6px}
+.stats{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -489,365 +160,703 @@ footer p,footer a{
 <body>
 
 <header>
-  <div class="topbar">
+<div class="top">
+<div class="logo">🛍️ Obaid Safi <span>Market</span></div>
 
-    <div class="logo">
-      🛍️ Obaid Safi <span>Market</span>
-    </div>
+<div class="search">
+<input id="searchInput" placeholder="Search products, shops, brands...">
+<button onclick="searchProducts()">🔍</button>
+</div>
 
-    <div class="search">
-      <input type="text" placeholder="Search products, shops, brands...">
-      <button>🔍</button>
-    </div>
+<button class="btn" onclick="openModal('loginModal')">Sign In</button>
+<button class="btn red" onclick="openModal('signupModal')">Sign Up</button>
 
-    <div class="account-buttons">
-      <button class="signin" onclick="openLogin()">Sign In</button>
-      <button class="signup" onclick="openSignup()">Sign Up</button>
-    </div>
-
-    <div>🛒 Cart (0)</div>
-
-  </div>
+<div class="cart" onclick="openCart()">
+🛒 Cart (<span id="cartCount">0</span>)
+</div>
+</div>
 </header>
 
 <nav>
-  <a href="#">☰ All Categories</a>
-  <a href="#">Electronics</a>
-  <a href="#">Mobile Phones</a>
-  <a href="#">Computers</a>
-  <a href="#">Fashion</a>
-  <a href="#">Home & Kitchen</a>
-  <a href="#">Beauty</a>
-  <a href="#">Vehicles</a>
-  <a href="#">New Arrivals</a>
+<button onclick="filterCategory('all')">☰ All Categories</button>
+<button onclick="filterCategory('Electronics')">Electronics</button>
+<button onclick="filterCategory('Fashion')">Fashion</button>
+<button onclick="filterCategory('Home')">Home</button>
+<button onclick="filterCategory('Beauty')">Beauty</button>
+<button onclick="filterCategory('Vehicles')">Vehicles</button>
 </nav>
 
 <div class="hero">
-  <div class="hero-content">
-    <h1>Find Everything You Need <span>in One Place</span></h1>
-
-    <p>
-      Discover products from sellers around the world.
-      Shop easily and explore the growing Obaid Safi Market.
-    </p>
-
-    <button class="primary">Start Shopping</button>
-    <button class="secondary">Become a Seller</button>
-  </div>
+<h1>Find Everything You Need <span>in One Place</span></h1>
+<p>
+Discover products from sellers around the world.
+Obaid Safi Market connects buyers and independent stores.
+</p>
+<button class="btn red" onclick="scrollProducts()">Start Shopping</button>
+<button class="btn" onclick="openModal('sellerModal')">Become a Seller</button>
 </div>
 
 <div class="features">
-
-  <div class="feature">
-    <strong>🌍 Global Access</strong>
-    <p>Marketplace designed for worldwide access.</p>
-  </div>
-
-  <div class="feature">
-    <strong>🛡️ Secure & Private</strong>
-    <p>Security-focused marketplace architecture.</p>
-  </div>
-
-  <div class="feature">
-    <strong>🏪 Multi-Vendor Market</strong>
-    <p>Independent sellers can operate their own stores.</p>
-  </div>
-
-  <div class="feature">
-    <strong>💬 Seller Messaging</strong>
-    <p>Buyers and sellers can communicate directly.</p>
-  </div>
-
+<div class="feature">
+<h3>🌍 Global Access</h3>
+<p>Marketplace designed for worldwide access.</p>
+</div>
+<div class="feature">
+<h3>🛡️ Secure & Private</h3>
+<p>Security-focused architecture.</p>
+</div>
+<div class="feature">
+<h3>🏪 Multi-Vendor</h3>
+<p>Independent sellers can operate stores.</p>
+</div>
+<div class="feature">
+<h3>💬 Text Messaging</h3>
+<p>Buyers can contact sellers directly.</p>
+</div>
 </div>
 
 <section>
+<div class="title">
+<h2>Top Categories</h2>
+</div>
 
-  <div class="section-title">
-    <h2>Top Categories</h2>
-    <a href="#">View All</a>
-  </div>
+<div class="categories">
+<div class="category" onclick="filterCategory('Electronics')"><b>📱</b>Electronics</div>
+<div class="category" onclick="filterCategory('Fashion')"><b>👕</b>Fashion</div>
+<div class="category" onclick="filterCategory('Home')"><b>🏠</b>Home</div>
+<div class="category" onclick="filterCategory('Beauty')"><b>💄</b>Beauty</div>
+<div class="category" onclick="filterCategory('Vehicles')"><b>🚗</b>Vehicles</div>
+<div class="category" onclick="filterCategory('all')"><b>🛍️</b>All</div>
+</div>
+</section>
 
-  <div class="categories">
+<section id="productSection">
+<div class="title">
+<h2>Featured Products</h2>
+<span id="resultText"></span>
+</div>
 
-    <div class="category">
-      <div class="icon">📱</div>
-      Smartphones
-    </div>
-
-    <div class="category">
-      <div class="icon">💻</div>
-      Laptops
-    </div>
-
-    <div class="category">
-      <div class="icon">👕</div>
-      Fashion
-    </div>
-
-    <div class="category">
-      <div class="icon">🏠</div>
-      Home
-    </div>
-
-    <div class="category">
-      <div class="icon">💄</div>
-      Beauty
-    </div>
-
-    <div class="category">
-      <div class="icon">🚗</div>
-      Vehicles
-    </div>
-
-  </div>
+<div class="products" id="products"></div>
 </section>
 
 <section>
+<div class="title">
+<h2>Popular Sellers</h2>
+</div>
 
-  <div class="section-title">
-    <h2>Featured Products</h2>
-    <a href="#">See All</a>
-  </div>
+<div class="sellers">
+<div class="seller">
+<h3>🏪 Tech World</h3>
+<p class="verified">✓ Verified Seller</p>
+<p>Electronics & Computers</p>
+</div>
 
-  <div class="products">
+<div class="seller">
+<h3>👗 Global Fashion</h3>
+<p class="verified">✓ Verified Seller</p>
+<p>Clothing & Accessories</p>
+</div>
 
-    <div class="product">
-      <div class="product-image">📱</div>
-      <div class="product-info">
-        <h3>Smartphone Pro</h3>
-        <div class="rating">★★★★★</div>
-        <div class="price">$899</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-image">💻</div>
-      <div class="product-info">
-        <h3>Premium Laptop</h3>
-        <div class="rating">★★★★★</div>
-        <div class="price">$1,249</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-image">🎧</div>
-      <div class="product-info">
-        <h3>Wireless Headphones</h3>
-        <div class="rating">★★★★☆</div>
-        <div class="price">$149</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-image">⌚</div>
-      <div class="product-info">
-        <h3>Smart Watch</h3>
-        <div class="rating">★★★★★</div>
-        <div class="price">$299</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-image">📷</div>
-      <div class="product-info">
-        <h3>Digital Camera</h3>
-        <div class="rating">★★★★☆</div>
-        <div class="price">$649</div>
-        <button>Add to Cart</button>
-      </div>
-    </div>
-
-  </div>
+<div class="seller">
+<h3>🏠 Home Center</h3>
+<p class="verified">✓ Verified Seller</p>
+<p>Home & Kitchen</p>
+</div>
+</div>
 </section>
 
 <section>
+<div class="global">
+<h2>🌍 Obaid Safi Market</h2>
+<p>A marketplace designed to grow into a worldwide network.</p>
 
-  <div class="section-title">
-    <h2>Popular Sellers</h2>
-  </div>
-
-  <div class="sellers">
-
-    <div class="seller">
-      <h3>🏪 Tech World</h3>
-      <p class="verified">✓ Verified Seller</p>
-      <p>Electronics & Computers</p>
-    </div>
-
-    <div class="seller">
-      <h3>👗 Global Fashion</h3>
-      <p class="verified">✓ Verified Seller</p>
-      <p>Clothing & Accessories</p>
-    </div>
-
-    <div class="seller">
-      <h3>🏠 Home Center</h3>
-      <p class="verified">✓ Verified Seller</p>
-      <p>Home & Kitchen</p>
-    </div>
-
-  </div>
-</section>
-
-<section>
-
-  <div class="global">
-
-    <h2>🌍 Obaid Safi Market</h2>
-
-    <p>A marketplace built to grow from local sellers to a worldwide network.</p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <h3>Global</h3>
-        <p>Access</p>
-      </div>
-
-      <div class="stat">
-        <h3>24/7</h3>
-        <p>Marketplace</p>
-      </div>
-
-      <div class="stat">
-        <h3>Multi</h3>
-        <p>Vendor</p>
-      </div>
-
-      <div class="stat">
-        <h3>Secure</h3>
-        <p>System</p>
-      </div>
-
-    </div>
-
-  </div>
-
+<div class="stats">
+<div class="stat"><h3>Global</h3><p>Access</p></div>
+<div class="stat"><h3>24/7</h3><p>Marketplace</p></div>
+<div class="stat"><h3>Multi</h3><p>Vendor</p></div>
+<div class="stat"><h3>Secure</h3><p>System</p></div>
+</div>
+</div>
 </section>
 
 <footer>
-
-  <div class="footer-grid">
-
-    <div>
-      <h2>Obaid Safi Market</h2>
-      <p>
-        A growing online marketplace connecting buyers and sellers.
-      </p>
-    </div>
-
-    <div>
-      <h3>Marketplace</h3>
-      <a href="#">Categories</a>
-      <a href="#">Products</a>
-      <a href="#">Sellers</a>
-      <a href="#">New Arrivals</a>
-    </div>
-
-    <div>
-      <h3>Account</h3>
-      <a href="#">Sign In</a>
-      <a href="#">Sign Up</a>
-      <a href="#">Become a Seller</a>
-      <a href="#">My Account</a>
-    </div>
-
-    <div>
-      <h3>Help</h3>
-      <a href="#">Contact</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Security</a>
-    </div>
-
-  </div>
-
-  <div class="copyright">
-    © 2026 Obaid Safi Market. All rights reserved.
-  </div>
-
+<h2>Obaid Safi Market</h2>
+<p>Global Marketplace — Buy • Sell • Connect</p>
+<p>© 2026 Obaid Safi Market</p>
 </footer>
 
 
-<!-- SIGN IN -->
-
-<div class="modal" id="loginModal">
-
-  <div class="modal-box">
-
-    <span class="close" onclick="closeLogin()">×</span>
-
-    <h2>Sign In</h2>
-
-    <input type="email" placeholder="Email">
-    <input type="password" placeholder="Password">
-
-    <button>Sign In</button>
-
-  </div>
-
-</div>
-
-
 <!-- SIGN UP -->
-
 <div class="modal" id="signupModal">
+<div class="box">
+<span class="close" onclick="closeModal('signupModal')">×</span>
+<h2>Create Account</h2>
 
-  <div class="modal-box">
+<input id="signupName" placeholder="Full Name">
+<input id="signupEmail" type="email" placeholder="Email">
+<input id="signupPassword" type="password" placeholder="Password">
 
-    <span class="close" onclick="closeSignup()">×</span>
-
-    <h2>Create Account</h2>
-
-    <input type="text" placeholder="Full Name">
-    <input type="email" placeholder="Email">
-    <input type="password" placeholder="Password">
-    <input type="password" placeholder="Confirm Password">
-
-    <button>Create Account</button>
-
-  </div>
-
+<button onclick="signup()">Create Account</button>
 </div>
+</div>
+
+
+<!-- SIGN IN -->
+<div class="modal" id="loginModal">
+<div class="box">
+<span class="close" onclick="closeModal('loginModal')">×</span>
+<h2>Sign In</h2>
+
+<input id="loginEmail" type="email" placeholder="Email">
+<input id="loginPassword" type="password" placeholder="Password">
+
+<button onclick="login()">Sign In</button>
+</div>
+</div>
+
+
+<!-- SELLER -->
+<div class="modal" id="sellerModal">
+<div class="box">
+<span class="close" onclick="closeModal('sellerModal')">×</span>
+<h2>Become a Seller</h2>
+
+<input id="storeName" placeholder="Store Name">
+<input id="sellerEmail" type="email" placeholder="Email">
+
+<button onclick="createStore()">Create Store</button>
+</div>
+</div>
+
+
+<!-- CART -->
+<div class="modal" id="cartModal">
+<div class="box">
+<span class="close" onclick="closeModal('cartModal')">×</span>
+<h2>My Cart</h2>
+
+<div id="cartItems"></div>
+
+<h3 style="margin-top:20px">
+Total: $<span id="cartTotal">0</span>
+</h3>
+
+<button onclick="checkout()">Checkout</button>
+</div>
+</div>
+
+
+<!-- MESSAGE -->
+<div class="modal" id="messageModal">
+<div class="box">
+<span class="close" onclick="closeModal('messageModal')">×</span>
+<h2>Message Seller</h2>
+
+<p id="messageProduct"></p>
+
+<textarea id="messageText" rows="5"
+placeholder="Type your message..."></textarea>
+
+<button onclick="sendMessage()">Send Message</button>
+</div>
+</div>
+
+<div class="notice" id="notice"></div>
 
 
 <script>
 
-function openLogin(){
-  document.getElementById("loginModal").style.display="flex";
+const productData=[
+{
+id:1,
+name:"Smartphone Pro",
+category:"Electronics",
+price:899,
+icon:"📱",
+seller:"Tech World"
+},
+{
+id:2,
+name:"Premium Laptop",
+category:"Electronics",
+price:1249,
+icon:"💻",
+seller:"Tech World"
+},
+{
+id:3,
+name:"Wireless Headphones",
+category:"Electronics",
+price:149,
+icon:"🎧",
+seller:"Tech World"
+},
+{
+id:4,
+name:"Smart Watch",
+category:"Electronics",
+price:299,
+icon:"⌚",
+seller:"Tech World"
+},
+{
+id:5,
+name:"Fashion Jacket",
+category:"Fashion",
+price:79,
+icon:"🧥",
+seller:"Global Fashion"
+},
+{
+id:6,
+name:"Home Chair",
+category:"Home",
+price:120,
+icon:"🪑",
+seller:"Home Center"
+},
+{
+id:7,
+name:"Beauty Set",
+category:"Beauty",
+price:45,
+icon:"💄",
+seller:"Beauty Store"
+},
+{
+id:8,
+name:"Car Accessory",
+category:"Vehicles",
+price:99,
+icon:"🚗",
+seller:"Auto World"
+}
+];
+
+let cart=JSON.parse(localStorage.getItem("osmCart")||"[]");
+let activeMessageProduct="";
+
+
+function renderProducts(list=productData){
+
+const holder=document.getElementById("products");
+
+holder.innerHTML="";
+
+if(list.length===0){
+holder.innerHTML="<p>No products found.</p>";
+return;
 }
 
-function closeLogin(){
-  document.getElementById("loginModal").style.display="none";
+list.forEach(p=>{
+
+holder.innerHTML+=`
+
+<div class="product">
+
+<div class="product-img">${p.icon}</div>
+
+<div class="product-body">
+
+<h3>${p.name}</h3>
+
+<div class="rating">★★★★★</div>
+
+<div class="price">$${p.price}</div>
+
+<p style="color:#92a7bf;margin-bottom:10px">
+${p.seller}
+</p>
+
+<div class="product-actions">
+
+<button class="add"
+onclick="addToCart(${p.id})">
+Add to Cart
+</button>
+
+<button class="msg"
+onclick="messageSeller(${p.id})">
+Message
+</button>
+
+</div>
+</div>
+</div>
+
+`;
+
+});
+
 }
 
-function openSignup(){
-  document.getElementById("signupModal").style.display="flex";
+
+function addToCart(id){
+
+const p=productData.find(x=>x.id===id);
+
+cart.push(p);
+
+localStorage.setItem("osmCart",JSON.stringify(cart));
+
+updateCart();
+
+showNotice(p.name+" added to cart");
+
 }
 
-function closeSignup(){
-  document.getElementById("signupModal").style.display="none";
+
+function updateCart(){
+
+document.getElementById("cartCount").textContent=cart.length;
+
 }
 
-window.onclick=function(event){
 
-  const login=document.getElementById("loginModal");
-  const signup=document.getElementById("signupModal");
+function openCart(){
 
-  if(event.target===login){
-    login.style.display="none";
-  }
+const area=document.getElementById("cartItems");
 
-  if(event.target===signup){
-    signup.style.display="none";
-  }
+area.innerHTML="";
+
+let total=0;
+
+cart.forEach((p,index)=>{
+
+total+=p.price;
+
+area.innerHTML+=`
+
+<div class="cart-item">
+
+<span>${p.icon} ${p.name} — $${p.price}</span>
+
+<button
+onclick="removeCart(${index})"
+style="background:#ff2638;color:white;border:0;padding:7px;border-radius:5px">
+Remove
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("cartTotal").textContent=total;
+
+openModal("cartModal");
+
 }
+
+
+function removeCart(index){
+
+cart.splice(index,1);
+
+localStorage.setItem("osmCart",JSON.stringify(cart));
+
+updateCart();
+
+openCart();
+
+}
+
+
+function searchProducts(){
+
+const q=document.getElementById("searchInput")
+.value.toLowerCase().trim();
+
+const found=productData.filter(p=>
+
+p.name.toLowerCase().includes(q) ||
+
+p.category.toLowerCase().includes(q) ||
+
+p.seller.toLowerCase().includes(q)
+
+);
+
+renderProducts(found);
+
+document.getElementById("resultText")
+.textContent=found.length+" results";
+
+scrollProducts();
+
+}
+
+
+function filterCategory(category){
+
+if(category==="all"){
+renderProducts(productData);
+}
+else{
+renderProducts(
+productData.filter(p=>p.category===category)
+);
+}
+
+scrollProducts();
+
+}
+
+
+function scrollProducts(){
+
+document.getElementById("productSection")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+
+function openModal(id){
+
+document.getElementById(id).style.display="flex";
+
+}
+
+
+function closeModal(id){
+
+document.getElementById(id).style.display="none";
+
+}
+
+
+function signup(){
+
+const name=document.getElementById("signupName").value.trim();
+const email=document.getElementById("signupEmail").value.trim();
+const password=document.getElementById("signupPassword").value;
+
+if(!name || !email || !password){
+
+showNotice("Please complete all fields");
+
+return;
+
+}
+
+let users=JSON.parse(localStorage.getItem("osmUsers")||"[]");
+
+if(users.find(u=>u.email===email)){
+
+showNotice("Account already exists");
+
+return;
+
+}
+
+users.push({name,email,password});
+
+localStorage.setItem("osmUsers",JSON.stringify(users));
+
+closeModal("signupModal");
+
+showNotice("Account created successfully");
+
+}
+
+
+function login(){
+
+const email=document.getElementById("loginEmail").value.trim();
+const password=document.getElementById("loginPassword").value;
+
+const users=JSON.parse(localStorage.getItem("osmUsers")||"[]");
+
+const user=users.find(
+u=>u.email===email && u.password===password
+);
+
+if(!user){
+
+showNotice("Incorrect email or password");
+
+return;
+
+}
+
+localStorage.setItem("osmCurrentUser",JSON.stringify(user));
+
+closeModal("loginModal");
+
+showNotice("Welcome "+user.name);
+
+}
+
+
+function createStore(){
+
+const store=document.getElementById("storeName").value.trim();
+const email=document.getElementById("sellerEmail").value.trim();
+
+if(!store || !email){
+
+showNotice("Enter store name and email");
+
+return;
+
+}
+
+let stores=JSON.parse(localStorage.getItem("osmStores")||"[]");
+
+stores.push({
+store,
+email,
+created:new Date().toISOString()
+});
+
+localStorage.setItem("osmStores",JSON.stringify(stores));
+
+closeModal("sellerModal");
+
+showNotice("Store created");
+
+}
+
+
+function messageSeller(id){
+
+const p=productData.find(x=>x.id===id);
+
+activeMessageProduct=p.name;
+
+document.getElementById("messageProduct")
+.textContent="Product: "+p.name+" — Seller: "+p.seller;
+
+openModal("messageModal");
+
+}
+
+
+function sendMessage(){
+
+const text=document.getElementById("messageText").value.trim();
+
+if(!text){
+
+showNotice("Write a message");
+
+return;
+
+}
+
+let messages=
+JSON.parse(localStorage.getItem("osmMessages")||"[]");
+
+messages.push({
+
+product:activeMessageProduct,
+
+message:text,
+
+date:new Date().toISOString()
+
+});
+
+localStorage.setItem(
+"osmMessages",
+JSON.stringify(messages)
+);
+
+document.getElementById("messageText").value="";
+
+closeModal("messageModal");
+
+showNotice("Message sent");
+
+}
+
+
+function checkout(){
+
+if(cart.length===0){
+
+showNotice("Cart is empty");
+
+return;
+
+}
+
+let orders=
+JSON.parse(localStorage.getItem("osmOrders")||"[]");
+
+orders.push({
+
+items:cart,
+
+created:new Date().toISOString(),
+
+status:"New"
+
+});
+
+localStorage.setItem("osmOrders",JSON.stringify(orders));
+
+cart=[];
+
+localStorage.setItem("osmCart","[]");
+
+updateCart();
+
+closeModal("cartModal");
+
+showNotice("Order created successfully");
+
+}
+
+
+function showNotice(text){
+
+const n=document.getElementById("notice");
+
+n.textContent=text;
+
+n.style.display="block";
+
+setTimeout(()=>{
+n.style.display="none";
+},2200);
+
+}
+
+
+window.addEventListener("click",function(event){
+
+document.querySelectorAll(".modal").forEach(modal=>{
+
+if(event.target===modal){
+
+modal.style.display="none";
+
+}
+
+});
+
+});
+
+
+document.getElementById("searchInput")
+.addEventListener("keyup",function(event){
+
+if(event.key==="Enter"){
+
+searchProducts();
+
+}
+
+});
+
+
+renderProducts();
+
+updateCart();
 
 </script>
 
 </body>
-</html
+</html>
