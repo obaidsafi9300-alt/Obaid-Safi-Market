@@ -1,90 +1,214 @@
-<div class="modal" id="signupModal">
-  <div class="box">
-    <span class="close" onclick="closeModal('signupModal')">×</span>
+let selfieBlob = null;
 
-    <h2>Create Account</h2>
+async function startCamera(){
 
-    <input id="signupName" placeholder="Full Name">
+  try{
 
-    <input id="signupEmail"
-           type="email"
-           placeholder="Email">
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:"user"
+        },
+        audio:false
+      });
 
-    <input id="signupPassword"
-           type="password"
-           placeholder="Password">
+    document.getElementById("selfieVideo").srcObject = stream;
 
-    <select id="signupCountry"
-            style="width:100%;padding:13px;margin:7px 0;
-            background:#07182c;color:white;
-            border:1px solid #355577;border-radius:8px">
-      <option value="">Select Country</option>
-      <option>Afghanistan</option>
-      <option>Germany</option>
-      <option>France</option>
-      <option>United Kingdom</option>
-      <option>Italy</option>
-      <option>Spain</option>
-      <option>Netherlands</option>
-      <option>Belgium</option>
-      <option>Austria</option>
-      <option>Sweden</option>
-      <option>Other</option>
-    </select>
+  }catch(error){
 
-    <select id="idType"
-            style="width:100%;padding:13px;margin:7px 0;
-            background:#07182c;color:white;
-            border:1px solid #355577;border-radius:8px">
-      <option value="">Select ID Type</option>
-      <option value="tazkira">Afghan Tazkira</option>
-      <option value="national_id">National ID Card</option>
-      <option value="passport">Passport</option>
-    </select>
+    showNotice("Camera permission is required");
 
-    <p style="margin-top:12px">ID Front</p>
-    <input id="idFront"
-           type="file"
-           accept="image/*">
+  }
 
-    <p style="margin-top:12px">ID Back</p>
-    <input id="idBack"
-           type="file"
-           accept="image/*">
+}
 
-    <p style="margin-top:12px">Live Selfie</p>
 
-    <video id="selfieVideo"
-           autoplay
-           playsinline
-           style="width:100%;border-radius:10px;
-           background:black;margin-top:8px"></video>
+function captureSelfie(){
 
-    <canvas id="selfieCanvas"
-            style="display:none"></canvas>
+  const video =
+    document.getElementById("selfieVideo");
 
-    <button type="button"
-            onclick="startCamera()">
-      Open Camera
-    </button>
+  const canvas =
+    document.getElementById("selfieCanvas");
 
-    <button type="button"
-            onclick="captureSelfie()">
-      Take Selfie
-    </button>
+  if(!video.videoWidth){
 
-    <p id="selfieStatus"
-       style="color:#28db83;margin-top:8px"></p>
+    showNotice("Open camera first");
 
-    <label style="display:block;margin-top:15px">
-      <input id="verificationConsent"
-             type="checkbox">
-      I agree to identity verification
-    </label>
+    return;
 
-    <button onclick="submitVerification()">
-      Create Account & Verify ID
-    </button>
+  }
 
-  </div>
-</div>
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  canvas.toBlob(function(blob){
+
+    selfieBlob = blob;
+
+    document.getElementById(
+      "selfieStatus"
+    ).textContent = "✓ Selfie captured";
+
+  },"image/jpeg",0.9);
+
+}
+
+
+async function submitVerification(){
+
+  const name =
+    document.getElementById("signupName").value.trim();
+
+  const email =
+    document.getElementById("signupEmail").value.trim();
+
+  const password =
+    document.getElementById("signupPassword").value;
+
+  const country =
+    document.getElementById("signupCountry").value;
+
+  const idType =
+    document.getElementById("idType").value;
+
+  const front =
+    document.getElementById("idFront").files[0];
+
+  const back =
+    document.getElementById("idBack").files[0];
+
+  const consent =
+    document.getElementById(
+      "verificationConsent"
+    ).checked;
+
+
+  if(!name ||
+     !email ||
+     !password ||
+     !country ||
+     !idType){
+
+    showNotice("Complete all account fields");
+
+    return;
+
+  }
+
+
+  if(!front){
+
+    showNotice("Upload ID front");
+
+    return;
+
+  }
+
+
+  if(idType !== "passport" && !back){
+
+    showNotice("Upload ID back");
+
+    return;
+
+  }
+
+
+  if(!selfieBlob){
+
+    showNotice("Take a live selfie");
+
+    return;
+
+  }
+
+
+  if(!consent){
+
+    showNotice("Verification consent required");
+
+    return;
+
+  }
+
+
+  const form = new FormData();
+
+  form.append("name",name);
+  form.append("email",email);
+  form.append("password",password);
+  form.append("country",country);
+  form.append("id_type",idType);
+
+  form.append("id_front",front);
+
+  if(back){
+    form.append("id_back",back);
+  }
+
+  form.append(
+    "selfie",
+    selfieBlob,
+    "selfie.jpg"
+  );
+
+
+  /*
+  IMPORTANT:
+
+  This must point to YOUR OWN
+  self-hosted server later.
+
+  Example:
+
+  http://YOUR-SERVER-IP:8000/api/register
+  */
+
+  try{
+
+    const response = await fetch(
+      "/api/register",
+      {
+        method:"POST",
+        body:form
+      }
+    );
+
+    const result = await response.json();
+
+    if(response.ok){
+
+      closeModal("signupModal");
+
+      showNotice(
+        "Account created. Verification pending."
+      );
+
+    }else{
+
+      showNotice(
+        result.message || "Verification failed"
+      );
+
+    }
+
+  }catch(error){
+
+    showNotice(
+      "Self-hosted verification server is not connected yet"
+    );
+
+  }
+
+}
