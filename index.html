@@ -1,530 +1,1520 @@
-<!-- ===== VERIFIED SIGN UP ===== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obaid Safi Market</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#061426;
+  color:white;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+header{
+  background:#020d1f;
+  padding:18px 4%;
+  border-bottom:1px solid #203b5d;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#ff3045;
+}
+
+.search{
+  display:flex;
+  flex:1;
+  min-width:250px;
+}
+
+.search input{
+  width:100%;
+  padding:14px;
+  border:0;
+  outline:0;
+  border-radius:9px 0 0 9px;
+}
+
+.search button{
+  width:60px;
+  border:0;
+  background:#ff3045;
+  color:white;
+  border-radius:0 9px 9px 0;
+  cursor:pointer;
+}
+
+.btn{
+  padding:11px 17px;
+  color:white;
+  background:transparent;
+  border:1px solid #4a6688;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.red{
+  background:#ff3045;
+  border-color:#ff3045;
+}
+
+.cart{
+  cursor:pointer;
+  font-size:18px;
+}
+
+nav{
+  background:#0b203b;
+  display:flex;
+  overflow:auto;
+  white-space:nowrap;
+}
+
+nav button{
+  padding:15px 20px;
+  border:0;
+  background:transparent;
+  color:#d8e2ef;
+  cursor:pointer;
+}
+
+.hero{
+  width:92%;
+  margin:28px auto;
+  padding:50px 40px;
+  border-radius:20px;
+  border:1px solid #294b70;
+  background:
+    radial-gradient(circle at 80% 40%,#244196,transparent 40%),
+    linear-gradient(120deg,#0b2343,#071427);
+}
+
+.hero h1{
+  font-size:48px;
+  max-width:700px;
+}
+
+.hero h1 span{
+  color:#ff3045;
+}
+
+.hero p{
+  max-width:650px;
+  color:#afbdd0;
+  line-height:1.6;
+  font-size:18px;
+  margin:18px 0;
+}
+
+.features{
+  width:92%;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.feature{
+  background:#0d233d;
+  border:1px solid #294b70;
+  padding:20px;
+  border-radius:15px;
+}
+
+.feature p{
+  color:#91a5bf;
+  margin-top:7px;
+}
+
+section{
+  width:92%;
+  margin:40px auto;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
+}
+
+.category{
+  background:#0d233d;
+  border:1px solid #294b70;
+  padding:22px 10px;
+  border-radius:15px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.category b{
+  display:block;
+  font-size:35px;
+  margin-bottom:8px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product{
+  background:#0d233d;
+  border:1px solid #294b70;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.product-img{
+  height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:75px;
+  background:linear-gradient(145deg,#163756,#08172a);
+}
+
+.product-body{
+  padding:17px;
+}
+
+.rating{
+  color:#ffc400;
+  margin:8px 0;
+}
+
+.price{
+  color:#ff4055;
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.product button{
+  width:100%;
+  padding:11px;
+  border:0;
+  border-radius:8px;
+  background:#ff3045;
+  color:white;
+  cursor:pointer;
+}
+
+footer{
+  background:#020d1f;
+  border-top:1px solid #203b5d;
+  padding:40px 4%;
+  margin-top:50px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:1000;
+  align-items:flex-start;
+  justify-content:center;
+  padding:25px;
+  overflow:auto;
+}
+
+.box{
+  margin:auto;
+  width:100%;
+  max-width:500px;
+  background:#0d233d;
+  border:1px solid #355b82;
+  border-radius:18px;
+  padding:25px;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close{
+  font-size:30px;
+  cursor:pointer;
+}
+
+.box input,
+.box select{
+  width:100%;
+  padding:13px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #355b82;
+  background:#07172b;
+  color:white;
+}
+
+.box label{
+  display:block;
+  margin:10px 0 5px;
+}
+
+.box video,
+.box img{
+  width:100%;
+  border-radius:10px;
+  margin:10px 0;
+  background:black;
+}
+
+.action{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border:0;
+  border-radius:8px;
+  background:#ff3045;
+  color:white;
+  cursor:pointer;
+}
+
+.blue{
+  background:#1678dc;
+}
+
+.green{
+  background:#15945f;
+}
+
+.cart-panel{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:1200;
+  padding:25px;
+  overflow:auto;
+}
+
+.cart-box{
+  max-width:500px;
+  margin:auto;
+  background:#0d233d;
+  padding:25px;
+  border-radius:18px;
+  border:1px solid #355b82;
+}
+
+.cart-item{
+  border-bottom:1px solid #294b70;
+  padding:12px 0;
+}
+
+.notice{
+  display:none;
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#173755;
+  padding:13px 20px;
+  border-radius:9px;
+  z-index:2000;
+}
+
+@media(max-width:900px){
+  .features{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .categories{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .logo{
+    width:100%;
+    font-size:25px;
+  }
+
+  .search{
+    width:100%;
+    flex-basis:100%;
+  }
+
+  .hero{
+    padding:35px 25px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .features{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .categories{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+
+  .product-img{
+    height:135px;
+    font-size:60px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="topbar">
+
+<div class="logo">
+🛍️ Obaid Safi <span>Market</span>
+</div>
+
+<div class="search">
+<input id="searchInput" placeholder="Search products, shops, brands...">
+<button onclick="searchProducts()">🔍</button>
+</div>
+
+<button class="btn" onclick="openLogin()">Sign In</button>
+
+<button class="btn red" onclick="openSignup()">Sign Up</button>
+
+<div class="cart" onclick="openCart()">
+🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
+</div>
+</header>
+
+<nav>
+
+<button onclick="filterProducts('all')">☰ All Categories</button>
+
+<button onclick="filterProducts('electronics')">Electronics</button>
+
+<button onclick="filterProducts('computers')">Computers</button>
+
+<button onclick="filterProducts('fashion')">Fashion</button>
+
+<button onclick="filterProducts('home')">Home</button>
+
+<button onclick="filterProducts('beauty')">Beauty</button>
+
+</nav>
+
+
+<div class="hero">
+
+<div>
+
+<h1>
+Find Everything You Need
+<span>in One Place</span>
+</h1>
+
+<p>
+Discover products from sellers around the world.
+Shop easily and explore Obaid Safi Market.
+</p>
+
+<button class="btn red" onclick="goProducts()">
+Start Shopping
+</button>
+
+<button class="btn">
+Become a Seller
+</button>
+
+</div>
+
+</div>
+
+
+<div class="features">
+
+<div class="feature">
+<h3>🌍 Global Access</h3>
+<p>Worldwide marketplace.</p>
+</div>
+
+<div class="feature">
+<h3>🛡️ Secure & Private</h3>
+<p>Security-focused system.</p>
+</div>
+
+<div class="feature">
+<h3>🏬 Multi-Vendor</h3>
+<p>Sellers can operate stores.</p>
+</div>
+
+<div class="feature">
+<h3>💬 Text Messaging</h3>
+<p>Buyer and seller messaging.</p>
+</div>
+
+</div>
+
+
+<section>
+
+<div class="section-title">
+<h2>Top Categories</h2>
+</div>
+
+<div class="categories">
+
+<div class="category" onclick="filterProducts('electronics')">
+<b>📱</b>
+Electronics
+</div>
+
+<div class="category" onclick="filterProducts('computers')">
+<b>💻</b>
+Computers
+</div>
+
+<div class="category" onclick="filterProducts('fashion')">
+<b>👕</b>
+Fashion
+</div>
+
+<div class="category" onclick="filterProducts('home')">
+<b>🏠</b>
+Home
+</div>
+
+<div class="category" onclick="filterProducts('beauty')">
+<b>💄</b>
+Beauty
+</div>
+
+<div class="category" onclick="filterProducts('all')">
+<b>🛍️</b>
+All
+</div>
+
+</div>
+
+</section>
+
+
+<section id="productSection">
+
+<div class="section-title">
+<h2>Featured Products</h2>
+</div>
+
+<div class="products" id="products">
+
+<div class="product"
+data-category="electronics"
+data-name="Smartphone Pro">
+
+<div class="product-img">📱</div>
+
+<div class="product-body">
+
+<h3>Smartphone Pro</h3>
+
+<div class="rating">★★★★★</div>
+
+<div class="price">$899</div>
+
+<button onclick="addToCart('Smartphone Pro',899)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="product"
+data-category="computers"
+data-name="Premium Laptop">
+
+<div class="product-img">💻</div>
+
+<div class="product-body">
+
+<h3>Premium Laptop</h3>
+
+<div class="rating">★★★★★</div>
+
+<div class="price">$1,249</div>
+
+<button onclick="addToCart('Premium Laptop',1249)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="product"
+data-category="electronics"
+data-name="Wireless Headphones">
+
+<div class="product-img">🎧</div>
+
+<div class="product-body">
+
+<h3>Wireless Headphones</h3>
+
+<div class="rating">★★★★☆</div>
+
+<div class="price">$149</div>
+
+<button onclick="addToCart('Wireless Headphones',149)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="product"
+data-category="electronics"
+data-name="Smart Watch">
+
+<div class="product-img">⌚</div>
+
+<div class="product-body">
+
+<h3>Smart Watch</h3>
+
+<div class="rating">★★★★★</div>
+
+<div class="price">$299</div>
+
+<button onclick="addToCart('Smart Watch',299)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="product"
+data-category="fashion"
+data-name="Fashion Jacket">
+
+<div class="product-img">🧥</div>
+
+<div class="product-body">
+
+<h3>Fashion Jacket</h3>
+
+<div class="rating">★★★★☆</div>
+
+<div class="price">$119</div>
+
+<button onclick="addToCart('Fashion Jacket',119)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="product"
+data-category="home"
+data-name="Home Product">
+
+<div class="product-img">🏠</div>
+
+<div class="product-body">
+
+<h3>Home Product</h3>
+
+<div class="rating">★★★★★</div>
+
+<div class="price">$249</div>
+
+<button onclick="addToCart('Home Product',249)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<h2>Obaid Safi Market</h2>
+
+<p style="color:#91a5bf;margin-top:10px">
+Global Marketplace
+</p>
+
+</footer>
+
+
+<!-- SIGN IN -->
+
+<div class="modal" id="loginModal">
+
+<div class="box">
+
+<div class="modal-head">
+
+<h2>Sign In</h2>
+
+<span class="close" onclick="closeLogin()">×</span>
+
+</div>
+
+<input type="email" placeholder="Email">
+
+<input type="password" placeholder="Password">
+
+<button class="action" onclick="showNotice('Sign In form works')">
+Sign In
+</button>
+
+</div>
+
+</div>
+
+
+<!-- VERIFIED SIGN UP -->
 
 <div class="modal" id="signupModal">
-  <div class="box">
 
-    <div class="modal-head">
-      <h2>Create Verified Account</h2>
-      <span class="close" onclick="closeSignup()">×</span>
-    </div>
+<div class="box">
 
-    <input id="bioName"
-           type="text"
-           placeholder="Full Name">
+<div class="modal-head">
 
-    <input id="bioEmail"
-           type="email"
-           placeholder="Email">
+<h2>Create Verified Account</h2>
 
-    <input id="bioPassword"
-           type="password"
-           placeholder="Password">
+<span class="close" onclick="closeSignup()">×</span>
 
-    <select id="bioCountry">
-      <option value="">Select Country</option>
-      <option>Afghanistan</option>
-      <option>Germany</option>
-      <option>France</option>
-      <option>United Kingdom</option>
-      <option>Italy</option>
-      <option>Spain</option>
-      <option>Netherlands</option>
-      <option>Belgium</option>
-      <option>Austria</option>
-      <option>Sweden</option>
-      <option>Norway</option>
-      <option>Denmark</option>
-      <option>Switzerland</option>
-      <option>United States</option>
-      <option>Canada</option>
-      <option>Australia</option>
-      <option>Turkey</option>
-      <option>UAE</option>
-      <option>Saudi Arabia</option>
-      <option>Pakistan</option>
-      <option>India</option>
-      <option>Other</option>
-    </select>
-
-    <select id="bioIdType">
-      <option value="">Select Identity Document</option>
-      <option value="tazkira">Afghan Tazkira</option>
-      <option value="national-id">National ID Card</option>
-      <option value="residence-card">Residence Card</option>
-      <option value="passport">Passport</option>
-    </select>
-
-    <label>ID / Tazkira Front</label>
-    <input id="bioIdFront"
-           type="file"
-           accept="image/jpeg,image/png,image/webp"
-           capture="environment">
-
-    <label>ID Back</label>
-    <input id="bioIdBack"
-           type="file"
-           accept="image/jpeg,image/png,image/webp"
-           capture="environment">
-
-    <h3 style="margin-top:15px;">
-      Face Biometric Verification
-    </h3>
-
-    <p style="color:#91a5bf;margin:8px 0;">
-      Take a live selfie using the front camera.
-    </p>
-
-    <video id="bioVideo"
-           autoplay
-           playsinline
-           muted
-           style="
-             display:none;
-             width:100%;
-             background:#000;
-             border-radius:10px;
-             margin:10px 0;
-           ">
-    </video>
-
-    <canvas id="bioCanvas"
-            style="display:none;">
-    </canvas>
-
-    <img id="bioPreview"
-         alt=""
-         style="
-           display:none;
-           width:100%;
-           border-radius:10px;
-           margin:10px 0;
-         ">
-
-    <button type="button"
-            class="action blue"
-            onclick="bioStartCamera()">
-      Open Front Camera
-    </button>
-
-    <button type="button"
-            class="action green"
-            onclick="bioTakeSelfie()">
-      Capture Live Selfie
-    </button>
-
-    <p id="bioStatus"
-       style="color:#32db88;margin-top:10px;">
-    </p>
-
-    <label style="margin-top:15px;">
-      <input id="bioConsent"
-             type="checkbox"
-             style="width:auto;margin-right:8px;">
-      I agree to identity and biometric verification.
-    </label>
-
-    <button type="button"
-            class="action"
-            onclick="bioSubmitSignup()">
-      Create Account & Verify
-    </button>
-
-    <p id="bioMessage"
-       style="margin-top:12px;color:#a7b7cb;">
-    </p>
-
-  </div>
 </div>
+
+<input id="signupName"
+type="text"
+placeholder="Full Name">
+
+<input id="signupEmail"
+type="email"
+placeholder="Email">
+
+<input id="signupPassword"
+type="password"
+placeholder="Password">
+
+<select id="signupCountry">
+
+<option value="">Select Country</option>
+
+<option>Afghanistan</option>
+<option>Germany</option>
+<option>France</option>
+<option>United Kingdom</option>
+<option>Italy</option>
+<option>Spain</option>
+<option>Netherlands</option>
+<option>Belgium</option>
+<option>Austria</option>
+<option>Sweden</option>
+<option>Other</option>
+
+</select>
+
+
+<select id="idType">
+
+<option value="">Select ID Type</option>
+
+<option value="tazkira">
+Afghan Tazkira
+</option>
+
+<option value="national_id">
+National ID Card
+</option>
+
+<option value="passport">
+Passport
+</option>
+
+</select>
+
+
+<label>ID / Tazkira Front</label>
+
+<input id="idFront"
+type="file"
+accept="image/*">
+
+
+<label>ID Back</label>
+
+<input id="idBack"
+type="file"
+accept="image/*">
+
+
+<h3>Live Selfie</h3>
+
+<video id="camera"
+autoplay
+playsinline
+style="display:none">
+</video>
+
+<canvas id="selfieCanvas"
+style="display:none">
+</canvas>
+
+<img id="selfiePreview"
+style="display:none"
+alt="">
+
+
+<button class="action blue"
+onclick="startCamera()">
+Open Camera
+</button>
+
+
+<button class="action green"
+onclick="takeSelfie()">
+Take Selfie
+</button>
+
+
+<p id="selfieStatus"
+style="margin-top:10px;color:#32db88">
+</p>
+
+
+<label>
+
+<input id="consent"
+type="checkbox"
+style="width:auto;margin-right:7px">
+
+I agree to identity verification.
+
+</label>
+
+
+<button class="action"
+onclick="checkVerificationForm()">
+Create Account & Verify
+</button>
+
+
+<p id="verificationMessage"
+style="margin-top:12px;color:#a7b7cb">
+</p>
+
+</div>
+
+</div>
+
+
+<!-- CART -->
+
+<div class="cart-panel" id="cartPanel">
+
+<div class="cart-box">
+
+<div class="modal-head">
+
+<h2>My Cart</h2>
+
+<span class="close" onclick="closeCart()">×</span>
+
+</div>
+
+<div id="cartItems"></div>
+
+<h3 style="margin-top:20px">
+Total: $<span id="cartTotal">0</span>
+</h3>
+
+</div>
+
+</div>
+
+
+<div class="notice" id="notice"></div>
 
 
 <script>
 
-let bioSelfieBlob = null;
-let bioCameraStream = null;
+/* MARKET CORE */
+
+let cart =
+JSON.parse(
+localStorage.getItem("osmCart") || "[]"
+);
+
+let selfieBlob = null;
+let cameraStream = null;
 
 
-/* OPEN SIGN UP */
+/* NOTICE */
+
+function showNotice(text){
+
+const n =
+document.getElementById("notice");
+
+n.textContent = text;
+
+n.style.display = "block";
+
+setTimeout(function(){
+
+n.style.display = "none";
+
+},2000);
+
+}
+
+
+/* CART */
+
+function addToCart(name,price){
+
+const item =
+cart.find(function(x){
+
+return x.name === name;
+
+});
+
+
+if(item){
+
+item.qty += 1;
+
+}else{
+
+cart.push({
+
+name:name,
+
+price:price,
+
+qty:1
+
+});
+
+}
+
+
+localStorage.setItem(
+"osmCart",
+JSON.stringify(cart)
+);
+
+
+updateCart();
+
+
+showNotice(
+name+" added to cart"
+);
+
+}
+
+
+function updateCart(){
+
+let count=0;
+let total=0;
+
+const area =
+document.getElementById("cartItems");
+
+area.innerHTML="";
+
+
+cart.forEach(function(item,index){
+
+count += item.qty;
+
+total += item.price * item.qty;
+
+
+const div =
+document.createElement("div");
+
+div.className="cart-item";
+
+div.innerHTML =
+
+"<strong>"+
+item.name+
+"</strong><br>"+
+"$"+
+item.price+
+" × "+
+item.qty+
+"<br><button onclick='removeCart("+
+index+
+")' style='margin-top:7px;padding:6px;background:#ff3045;color:white;border:0;border-radius:5px'>Remove</button>";
+
+
+area.appendChild(div);
+
+});
+
+
+document.getElementById(
+"cartCount"
+).textContent = count;
+
+
+document.getElementById(
+"cartTotal"
+).textContent = total;
+
+}
+
+
+function removeCart(index){
+
+cart.splice(index,1);
+
+localStorage.setItem(
+"osmCart",
+JSON.stringify(cart)
+);
+
+updateCart();
+
+}
+
+
+function openCart(){
+
+updateCart();
+
+document.getElementById(
+"cartPanel"
+).style.display="block";
+
+}
+
+
+function closeCart(){
+
+document.getElementById(
+"cartPanel"
+).style.display="none";
+
+}
+
+
+/* SEARCH */
+
+function searchProducts(){
+
+const q =
+document.getElementById(
+"searchInput"
+).value.toLowerCase();
+
+
+document
+.querySelectorAll(".product")
+.forEach(function(product){
+
+const name =
+product.dataset.name.toLowerCase();
+
+
+product.style.display =
+name.includes(q)
+? "block"
+: "none";
+
+});
+
+
+goProducts();
+
+}
+
+
+/* FILTER */
+
+function filterProducts(category){
+
+document
+.querySelectorAll(".product")
+.forEach(function(product){
+
+if(
+category === "all" ||
+product.dataset.category === category
+){
+
+product.style.display="block";
+
+}else{
+
+product.style.display="none";
+
+}
+
+});
+
+
+goProducts();
+
+}
+
+
+function goProducts(){
+
+document
+.getElementById("productSection")
+.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+}
+
+
+/* LOGIN */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display="flex";
+
+}
+
+
+function closeLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display="none";
+
+}
+
+
+/* SIGN UP */
 
 function openSignup(){
 
-  document.getElementById(
-    "signupModal"
-  ).style.display = "flex";
+document.getElementById(
+"signupModal"
+).style.display="flex";
 
 }
 
-
-/* CLOSE SIGN UP */
 
 function closeSignup(){
 
-  bioStopCamera();
+stopCamera();
 
-  document.getElementById(
-    "signupModal"
-  ).style.display = "none";
-
-}
-
-
-/* OPEN FRONT CAMERA */
-
-async function bioStartCamera(){
-
-  const status =
-    document.getElementById("bioStatus");
-
-  try{
-
-    bioCameraStream =
-      await navigator.mediaDevices.getUserMedia({
-
-        video:{
-          facingMode:"user",
-          width:{ideal:1280},
-          height:{ideal:720}
-        },
-
-        audio:false
-
-      });
-
-    const video =
-      document.getElementById("bioVideo");
-
-    video.srcObject =
-      bioCameraStream;
-
-    video.style.display =
-      "block";
-
-    status.textContent =
-      "Front camera active ✓";
-
-  }
-
-  catch(error){
-
-    status.textContent =
-      "Camera permission is required.";
-
-  }
+document.getElementById(
+"signupModal"
+).style.display="none";
 
 }
 
 
-/* CAPTURE LIVE SELFIE */
+/* CAMERA */
 
-function bioTakeSelfie(){
+async function startCamera(){
 
-  const video =
-    document.getElementById("bioVideo");
-
-  const canvas =
-    document.getElementById("bioCanvas");
-
-  const preview =
-    document.getElementById("bioPreview");
-
-  const status =
-    document.getElementById("bioStatus");
+const status =
+document.getElementById(
+"selfieStatus"
+);
 
 
-  if(!video.videoWidth){
+try{
 
-    status.textContent =
-      "Open the camera first.";
+cameraStream =
+await navigator.mediaDevices
+.getUserMedia({
 
-    return;
+video:{
+facingMode:"user"
+},
 
-  }
+audio:false
 
-
-  canvas.width =
-    video.videoWidth;
-
-  canvas.height =
-    video.videoHeight;
+});
 
 
-  const ctx =
-    canvas.getContext("2d");
+const video =
+document.getElementById(
+"camera"
+);
 
 
-  ctx.drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
+video.srcObject =
+cameraStream;
 
 
-  canvas.toBlob(
+video.style.display =
+"block";
 
-    function(blob){
 
-      if(!blob){
+status.textContent =
+"Camera opened ✓";
 
-        status.textContent =
-          "Selfie capture failed.";
+}
 
-        return;
+catch(error){
 
-      }
+status.textContent =
+"Camera permission denied";
 
-      bioSelfieBlob =
-        blob;
+}
 
-      preview.src =
-        URL.createObjectURL(blob);
+}
 
-      preview.style.display =
-        "block";
 
-      status.textContent =
-        "Live selfie captured ✓";
+/* SELFIE */
 
-      bioStopCamera();
+function takeSelfie(){
 
-    },
+const video =
+document.getElementById(
+"camera"
+);
 
-    "image/jpeg",
+const canvas =
+document.getElementById(
+"selfieCanvas"
+);
 
-    0.9
+const preview =
+document.getElementById(
+"selfiePreview"
+);
 
-  );
+const status =
+document.getElementById(
+"selfieStatus"
+);
+
+
+if(!video.videoWidth){
+
+status.textContent =
+"Open camera first";
+
+return;
+
+}
+
+
+canvas.width =
+video.videoWidth;
+
+canvas.height =
+video.videoHeight;
+
+
+canvas
+.getContext("2d")
+.drawImage(
+
+video,
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+
+canvas.toBlob(
+
+function(blob){
+
+selfieBlob = blob;
+
+
+preview.src =
+URL.createObjectURL(blob);
+
+
+preview.style.display =
+"block";
+
+
+status.textContent =
+"Selfie captured ✓";
+
+
+stopCamera();
+
+},
+
+"image/jpeg",
+
+0.9
+
+);
 
 }
 
 
 /* STOP CAMERA */
 
-function bioStopCamera(){
+function stopCamera(){
 
-  if(bioCameraStream){
+if(cameraStream){
 
-    bioCameraStream
-      .getTracks()
-      .forEach(function(track){
+cameraStream
+.getTracks()
+.forEach(function(track){
 
-        track.stop();
+track.stop();
 
-      });
+});
 
-    bioCameraStream = null;
 
-  }
+cameraStream=null;
+
+}
 
 }
 
 
-/* CHECK SIGN UP + VERIFICATION */
-
-function bioSubmitSignup(){
-
-  const name =
-    document.getElementById(
-      "bioName"
-    ).value.trim();
-
-  const email =
-    document.getElementById(
-      "bioEmail"
-    ).value.trim();
-
-  const password =
-    document.getElementById(
-      "bioPassword"
-    ).value;
-
-  const country =
-    document.getElementById(
-      "bioCountry"
-    ).value;
-
-  const idType =
-    document.getElementById(
-      "bioIdType"
-    ).value;
-
-  const idFront =
-    document.getElementById(
-      "bioIdFront"
-    ).files[0];
-
-  const idBack =
-    document.getElementById(
-      "bioIdBack"
-    ).files[0];
-
-  const consent =
-    document.getElementById(
-      "bioConsent"
-    ).checked;
-
-  const message =
-    document.getElementById(
-      "bioMessage"
-    );
-
-
-  if(
-    !name ||
-    !email ||
-    !password ||
-    !country ||
-    !idType
-  ){
-
-    message.textContent =
-      "Complete all account information.";
-
-    return;
-
-  }
-
-
-  if(!idFront){
-
-    message.textContent =
-      "Upload the front of your ID.";
-
-    return;
-
-  }
-
-
-  if(
-    idType !== "passport" &&
-    !idBack
-  ){
-
-    message.textContent =
-      "Upload the back of your ID.";
-
-    return;
-
-  }
-
-
-  if(!bioSelfieBlob){
-
-    message.textContent =
-      "Take your live biometric selfie.";
-
-    return;
-
-  }
-
-
-  if(!consent){
-
-    message.textContent =
-      "Verification consent is required.";
-
-    return;
-
-  }
-
-
-  const verificationData =
-    new FormData();
-
-
-  verificationData.append(
-    "name",
-    name
-  );
-
-  verificationData.append(
-    "email",
-    email
-  );
-
-  verificationData.append(
-    "password",
-    password
-  );
-
-  verificationData.append(
-    "country",
-    country
-  );
-
-  verificationData.append(
-    "id_type",
-    idType
-  );
-
-  verificationData.append(
-    "id_front",
-    idFront
-  );
-
-
-  if(idBack){
-
-    verificationData.append(
-      "id_back",
-      idBack
-    );
-
-  }
-
-
-  verificationData.append(
-    "selfie",
-    bioSelfieBlob,
-    "live-selfie.jpg"
-  );
-
-
-  /*
-    READY FOR YOUR SELF-HOSTED BACKEND.
-
-    Later we connect:
-
-    fetch("/api/identity/register", {
-      method:"POST",
-      body:verificationData
-    });
-
-    Backend will perform:
-
-    1. ID validation
-    2. Face detection
-    3. Selfie ↔ ID face comparison
-    4. Liveness check
-    5. Duplicate-account check
-    6. Pending / Verified / Rejected status
-  */
-
-
-  message.textContent =
-    "ID and biometric selfie ready for verification ✓";
-
-}
-
-
-/* CLOSE BY BACKGROUND */
-
-window.addEventListener(
-  "click",
-  function(event){
-
-    const modal =
-      document.getElementById(
-        "signupModal"
-      );
-
-    if(event.target === modal){
-
-      closeSignup();
-
-    }
-
-  }
+/* FORM CHECK */
+
+function checkVerificationForm(){
+
+const name =
+document.getElementById(
+"signupName"
+).value.trim();
+
+const email =
+document.getElementById(
+"signupEmail"
+).value.trim();
+
+const password =
+document.getElementById(
+"signupPassword"
+).value;
+
+const country =
+document.getElementById(
+"signupCountry"
+).value;
+
+const idType =
+document.getElementById(
+"idType"
+).value;
+
+const front =
+document.getElementById(
+"idFront"
+).files[0];
+
+const back =
+document.getElementById(
+"idBack"
+).files[0];
+
+const consent =
+document.getElementById(
+"consent"
+).checked;
+
+const message =
+document.getElementById(
+"verificationMessage"
 );
 
+
+if(
+!name ||
+!email ||
+!password ||
+!country ||
+!idType
+){
+
+message.textContent =
+"Complete all fields";
+
+return;
+
+}
+
+
+if(!front){
+
+message.textContent =
+"Upload ID front";
+
+return;
+
+}
+
+
+if(
+idType !== "passport" &&
+!back
+){
+
+message.textContent =
+"Upload ID back";
+
+return;
+
+}
+
+
+if(!selfieBlob){
+
+message.textContent =
+"Take live selfie";
+
+return;
+
+}
+
+
+if(!consent){
+
+message.textContent =
+"Verification consent required";
+
+return;
+
+}
+
+
+message.textContent =
+"ID and selfie are ready for verification ✓";
+
+
+/*
+REAL verification will later
+go to YOUR self-hosted backend.
+
+We do NOT save ID/selfie
+in localStorage or GitHub.
+*/
+
+}
+
+
+/* ENTER SEARCH */
+
+document
+.getElementById("searchInput")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+
+searchProducts();
+
+}
+
+});
+
+
+/* CLOSE MODALS */
+
+window.addEventListener(
+"click",
+function(event){
+
+const login =
+document.getElementById(
+"loginModal"
+);
+
+const signup =
+document.getElementById(
+"signupModal"
+);
+
+
+if(event.target === login){
+
+closeLogin();
+
+}
+
+
+if(event.target === signup){
+
+closeSignup();
+
+}
+
+});
+
+
+updateCart();
+
 </script>
+
+</body>
+</html>
