@@ -771,8 +771,8 @@ Profile Photo Upload
 
 <option value="">Select ID Type</option>
 <option value="national-id">ID Card / National ID</option>
-<option value="tazkira">
-Afghan Tazkira
+
+National ID Card
 </option>
 <option value="passport">Passport</option>
 
@@ -786,19 +786,19 @@ Afghan Tazkira
 </select>
 
 
-<label>ID / Tazkira Front</label>
+<label>ID / ID Front</label>
 
 <input id="idFront"
+  <button type="button" onclick="document.getElementById('idFront').value=''">Remove Front ID</button>
 type="file"
 accept="image/*">
-
 
 <label>ID Back</label>
 
 <input id="idBack"
 type="file"
 accept="image/*">
-
+<button type="button" onclick="document.getElementById('idFront').value=''">Remove Front ID</button>
 
 <h3>Live Selfie</h3>
 
