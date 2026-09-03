@@ -1472,7 +1472,10 @@ go to YOUR self-hosted backend.
 We do NOT save ID/selfie
 in localStorage or GitHub.
 */
-
+const verificationData = new FormData();
+  verificationData.append("idFront", front);
+  if (back) verificationData.append("idBack", back);
+  verificationData.append("selfie", selfieBlob);
 }
 
 
