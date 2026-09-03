@@ -1325,7 +1325,8 @@ stopCamera();
 
 function deleteSelfie(){
   selfieBlob = null;
-
+document.getElementById("selfiePreview").src = "";
+  document.getElementById("selfiePreview").style.display = "none";
   document.getElementById("selfieStatus").textContent = "";
   document.getElementById("deleteSelfieBtn").style.display = "none";
 }
