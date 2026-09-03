@@ -831,7 +831,10 @@ Close Camera
 onclick="takeSelfie()">
 Take Selfie
 </button>
-
+<button class="action red" id="deleteSelfieBtn"
+onclick="deleteSelfie()" style="display:none;">
+Delete Selfie
+</button>
 
 <p id="selfieStatus"
 style="margin-top:10px;color:#32db88">
@@ -1305,7 +1308,7 @@ preview.style.display =
 
 status.textContent =
 "Selfie captured ✓";
-
+document.getElementById("deleteSelfieBtn").style.display = "block";
 
 stopCamera();
 
@@ -1320,7 +1323,12 @@ stopCamera();
 }
 
 
-/* STOP CAMERA */
+function deleteSelfie(){
+  selfieBlob = null;
+
+  document.getElementById("selfieStatus").textContent = "";
+  document.getElementById("deleteSelfieBtn").style.display = "none";
+}
 
 function stopCamera(){
 
