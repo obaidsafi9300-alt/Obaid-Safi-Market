@@ -899,7 +899,27 @@ Total: $<span id="cartTotal">0</span>
 <script>
 
 /* MARKET CORE */
-
+document.addEventListener("DOMContentLoaded", function () {
+const signupButton = document.querySelector('[onclick="openSignup()"]');
+ if (signupButton) signupButton.addEventListener("click", openSignup);
+  console.log("Market activation started");
+ window.openSignup = openSignup;
+ window.openLogin = openLogin;
+ window.openCart = openCart;
+  window.searchProducts = searchProducts;
+  window.filterProducts = filterProducts;
+  window.goProducts = goProducts;
+  window.addToCart = addToCart;
+window.removeCart = removeCart;
+window.closeCart = closeCart;
+window.closeLogin = closeLogin;
+window.closeSignup = closeSignup;
+window.startCamera = startCamera;
+window.stopCamera = stopCamera;
+window.takeSelfie = takeSelfie;
+window.deleteSelfie = deleteSelfie;
+window.checkVerificationForm = checkVerificationForm;
+});
 let cart =
 JSON.parse(
 localStorage.getItem("osmCart") || "[]"
@@ -1534,6 +1554,7 @@ closeSignup();
 
 
 updateCart();
+console.log("Obaid Safi Market ready");  
 
 </script>
 
