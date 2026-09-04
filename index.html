@@ -1177,9 +1177,19 @@ function checkVerificationForm() {
   verificationData.append("email", email);
   verificationData.append("country", country);
   verificationData.append("consent", "true");
-
-  message.textContent = "Verification data prepared successfully ✓";
-
+message.textContent = "Sending verification...";
+  fetch("http://127.0.0.1:8000/verify", {
+  method: "POST",
+  body: verificationData
+   });
+  .then(response => response.json())
+  .then(data => {
+   message.textContent = "Verification submitted successfully ✓";
+  })
+.catch(error => {
+  console.error("Verification error:", error);
+  message.textContent = "Could not connect to verification server";
+});  
   console.log("Verification data ready", verificationData);
 }
 
