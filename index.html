@@ -1178,7 +1178,7 @@ function checkVerificationForm() {
   verificationData.append("country", country);
   verificationData.append("consent", "true");
 message.textContent = "Sending verification...";
-  fetch("http://127.0.0.1:8000/verify", {
+ fetch("http://192.168.1.104:8000/verify", { 
   method: "POST",
   body: verificationData
    })
