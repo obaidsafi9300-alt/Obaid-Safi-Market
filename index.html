@@ -897,664 +897,316 @@ Total: $<span id="cartTotal">0</span>
 
 
 <script>
-
-/* MARKET CORE */
-document.addEventListener("DOMContentLoaded", function () {
-const signupButton = document.querySelector('[onclick="openSignup()"]');
- if (signupButton) signupButton.addEventListener("click", openSignup);
-  console.log("Market activation started");
- window.openSignup = openSignup;
- window.openLogin = openLogin;
- window.openCart = openCart;
-  window.searchProducts = searchProducts;
-  window.filterProducts = filterProducts;
-  window.goProducts = goProducts;
-  window.addToCart = addToCart;
-window.removeCart = removeCart;
-window.closeCart = closeCart;
-window.closeLogin = closeLogin;
-window.closeSignup = closeSignup;
-window.startCamera = startCamera;
-window.stopCamera = stopCamera;
-window.takeSelfie = takeSelfie;
-window.deleteSelfie = deleteSelfie;
-window.checkVerificationForm = checkVerificationForm;
-});
-let cart =
-JSON.parse(
-localStorage.getItem("osmCart") || "[]"
-);
-
+  let cart = JSON.parse(localStorage.getItem("osmCart") || "[]");
 let selfieBlob = null;
 let cameraStream = null;
 
-
-/* NOTICE */
-
-function showNotice(text){
-
-const n =
-document.getElementById("notice");
-
-n.textContent = text;
-
-n.style.display = "block";
-
-setTimeout(function(){
-
-n.style.display = "none";
-
-},2000);
-
+function showNotice(text) {
+  const n = document.getElementById("notice");
+  if (!n) return;
+  n.textContent = text;
+  n.style.display = "block";
+  setTimeout(function () {
+    n.style.display = "none";
+  }, 2000);
 }
 
+function addToCart(name, price) {
+  const item = cart.find(function (x) {
+    return x.name === name;
+  });
 
-/* CART */
+  if (item) {
+    item.qty += 1;
+  } else {
+    cart.push({
+      name: name,
+      price: Number(price),
+      qty: 1
+    });
+  }
 
-function addToCart(name,price){
-
-const item =
-cart.find(function(x){
-
-return x.name === name;
-
-});
-
-
-if(item){
-
-item.qty += 1;
-
-}else{
-
-cart.push({
-
-name:name,
-
-price:price,
-
-qty:1
-
-});
-
+  localStorage.setItem("osmCart", JSON.stringify(cart));
+  updateCart();
+  showNotice(name + " added to cart");
 }
 
+function updateCart() {
+  let count = 0;
+  let total = 0;
+  const area = document.getElementById("cartItems");
 
-localStorage.setItem(
-"osmCart",
-JSON.stringify(cart)
-);
+  if (area) area.innerHTML = "";
 
+  cart.forEach(function (item, index) {
+    count += item.qty;
+    total += Number(item.price) * item.qty;
 
-updateCart();
+    if (area) {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML =
+        "<strong>" + item.name + "</strong><br>" +
+        "$" + item.price + " × " + item.qty +
+        "<br><button onclick='removeCart(" + index + ")'>Remove</button>";
 
+      area.appendChild(div);
+    }
+  });
 
-showNotice(
-name+" added to cart"
-);
+  const countBox = document.getElementById("cartCount");
+  const totalBox = document.getElementById("cartTotal");
 
+  if (countBox) countBox.textContent = count;
+  if (totalBox) totalBox.textContent = total.toFixed(2);
 }
 
-
-function updateCart(){
-
-let count=0;
-let total=0;
-
-const area =
-document.getElementById("cartItems");
-
-area.innerHTML="";
-
-
-cart.forEach(function(item,index){
-
-count += item.qty;
-
-total += item.price * item.qty;
-
-
-const div =
-document.createElement("div");
-
-div.className="cart-item";
-
-div.innerHTML =
-
-"<strong>"+
-item.name+
-"</strong><br>"+
-"$"+
-item.price+
-" × "+
-item.qty+
-"<br><button onclick='removeCart("+
-index+
-")' style='margin-top:7px;padding:6px;background:#ff3045;color:white;border:0;border-radius:5px'>Remove</button>";
-
-
-area.appendChild(div);
-
-});
-
-
-document.getElementById(
-"cartCount"
-).textContent = count;
-
-
-document.getElementById(
-"cartTotal"
-).textContent = total;
-
+function removeCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("osmCart", JSON.stringify(cart));
+  updateCart();
 }
 
-
-function removeCart(index){
-
-cart.splice(index,1);
-
-localStorage.setItem(
-"osmCart",
-JSON.stringify(cart)
-);
-
-updateCart();
-
+function openCart() {
+  updateCart();
+  const panel = document.getElementById("cartPanel");
+  if (panel) panel.style.display = "block";
 }
 
-
-function openCart(){
-
-updateCart();
-
-document.getElementById(
-"cartPanel"
-).style.display="block";
-
+function closeCart() {
+  const panel = document.getElementById("cartPanel");
+  if (panel) panel.style.display = "none";
 }
 
+function searchProducts() {
+  const input = document.getElementById("searchInput");
+  if (!input) return;
 
-function closeCart(){
+  const q = input.value.toLowerCase().trim();
 
-document.getElementById(
-"cartPanel"
-).style.display="none";
+  document.querySelectorAll(".product").forEach(function (product) {
+    const name = (product.dataset.name || "").toLowerCase();
+    product.style.display = name.includes(q) ? "block" : "none";
+  });
 
+  goProducts();
 }
 
+function filterProducts(category) {
+  document.querySelectorAll(".product").forEach(function (product) {
+    product.style.display =
+      category === "all" || product.dataset.category === category
+        ? "block"
+        : "none";
+  });
 
-/* SEARCH */
-
-function searchProducts(){
-
-const q =
-document.getElementById(
-"searchInput"
-).value.toLowerCase();
-
-
-document
-.querySelectorAll(".product")
-.forEach(function(product){
-
-const name =
-product.dataset.name.toLowerCase();
-
-
-product.style.display =
-name.includes(q)
-? "block"
-: "none";
-
-});
-
-
-goProducts();
-
+  goProducts();
 }
 
-
-/* FILTER */
-
-function filterProducts(category){
-
-document
-.querySelectorAll(".product")
-.forEach(function(product){
-
-if(
-category === "all" ||
-product.dataset.category === category
-){
-
-product.style.display="block";
-
-}else{
-
-product.style.display="none";
-
+function goProducts() {
+  const section = document.getElementById("productSection");
+  if (section) {
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
 }
 
-});
-
-
-goProducts();
-
+function openLogin() {
+  const modal = document.getElementById("loginModal");
+  if (modal) modal.style.display = "flex";
 }
 
-
-function goProducts(){
-
-document
-.getElementById("productSection")
-.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
+function closeLogin() {
+  const modal = document.getElementById("loginModal");
+  if (modal) modal.style.display = "none";
 }
 
-
-/* LOGIN */
-
-function openLogin(){
-
-document.getElementById(
-"loginModal"
-).style.display="flex";
-
+function openSignup() {
+  const modal = document.getElementById("signupModal");
+  if (modal) modal.style.display = "flex";
 }
 
-
-function closeLogin(){
-
-document.getElementById(
-"loginModal"
-).style.display="none";
-
+function closeSignup() {
+  stopCamera();
+  const modal = document.getElementById("signupModal");
+  if (modal) modal.style.display = "none";
 }
 
+async function startCamera() {
+  const status = document.getElementById("selfieStatus");
 
-/* SIGN UP */
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: false
+    });
 
-function openSignup(){
+    const video = document.getElementById("camera");
 
-document.getElementById(
-"signupModal"
-).style.display="flex";
+    if (video) {
+      video.srcObject = cameraStream;
+      video.style.display = "block";
+    }
 
+    if (status) status.textContent = "Camera opened ✓";
+  } catch (error) {
+    if (status) status.textContent = "Camera permission denied";
+  }
 }
 
+function stopCamera() {
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+    cameraStream = null;
+  }
 
-function closeSignup(){
-
-stopCamera();
-
-document.getElementById(
-"signupModal"
-).style.display="none";
-
+  const video = document.getElementById("camera");
+  if (video) {
+    video.srcObject = null;
+    video.style.display = "none";
+  }
 }
 
+function takeSelfie() {
+  const video = document.getElementById("camera");
+  const canvas = document.getElementById("selfieCanvas");
+  const preview = document.getElementById("selfiePreview");
+  const status = document.getElementById("selfieStatus");
+  const deleteButton = document.getElementById("deleteSelfieBtn");
 
-/* CAMERA */
+  if (!video || !canvas || !video.videoWidth) {
+    if (status) status.textContent = "Open camera first";
+    return;
+  }
 
-async function startCamera(){
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-const status =
-document.getElementById(
-"selfieStatus"
-);
+  canvas.getContext("2d").drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
+  canvas.toBlob(function (blob) {
+    if (!blob) return;
 
-try{
+    selfieBlob = blob;
 
-cameraStream =
-await navigator.mediaDevices
-.getUserMedia({
+    if (preview) {
+      preview.src = URL.createObjectURL(blob);
+      preview.style.display = "block";
+    }
 
-video:{
-facingMode:"user"
-},
+    if (status) status.textContent = "Selfie captured ✓";
+    if (deleteButton) deleteButton.style.display = "block";
 
-audio:false
-
-});
-
-
-const video =
-document.getElementById(
-"camera"
-);
-
-
-video.srcObject =
-cameraStream;
-
-
-video.style.display =
-"block";
-
-
-status.textContent =
-"Camera opened ✓";
-
+    stopCamera();
+  }, "image/jpeg", 0.9);
 }
 
-catch(error){
-
-status.textContent =
-"Camera permission denied";
-
-}
-
-}
-
-
-/* SELFIE */
-
-function takeSelfie(){
-
-const video =
-document.getElementById(
-"camera"
-);
-
-const canvas =
-document.getElementById(
-"selfieCanvas"
-);
-
-const preview =
-document.getElementById(
-"selfiePreview"
-);
-
-const status =
-document.getElementById(
-"selfieStatus"
-);
-
-
-if(!video.videoWidth){
-
-status.textContent =
-"Open camera first";
-
-return;
-
-}
-
-
-canvas.width =
-video.videoWidth;
-
-canvas.height =
-video.videoHeight;
-
-
-canvas
-.getContext("2d")
-.drawImage(
-
-video,
-
-0,
-
-0,
-
-canvas.width,
-
-canvas.height
-
-);
-
-
-canvas.toBlob(
-
-function(blob){
-
-selfieBlob = blob;
-
-
-preview.src =
-URL.createObjectURL(blob);
-
-
-preview.style.display =
-"block";
-
-
-status.textContent =
-"Selfie captured ✓";
-document.getElementById("deleteSelfieBtn").style.display = "block";
-
-stopCamera();
-
-},
-
-"image/jpeg",
-
-0.9
-
-);
-
-}
-
-
-function deleteSelfie(){
+function deleteSelfie() {
   selfieBlob = null;
-document.getElementById("selfiePreview").src = "";
-  document.getElementById("selfiePreview").style.display = "none";
-  document.getElementById("selfieStatus").textContent = "";
-  document.getElementById("deleteSelfieBtn").style.display = "none";
+
+  const preview = document.getElementById("selfiePreview");
+  const status = document.getElementById("selfieStatus");
+  const deleteButton = document.getElementById("deleteSelfieBtn");
+
+  if (preview) {
+    preview.src = "";
+    preview.style.display = "none";
+  }
+
+  if (status) status.textContent = "";
+  if (deleteButton) deleteButton.style.display = "none";
 }
 
-function stopCamera(){
+function checkVerificationForm() {
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const country = document.getElementById("signupCountry").value;
+  const idType = document.getElementById("idType").value;
+  const front = document.getElementById("idFront").files[0];
+  const back = document.getElementById("idBack").files[0];
+  const consent = document.getElementById("consent").checked;
+  const message = document.getElementById("verificationMessage");
 
-if(cameraStream){
+  if (!name || !email || !password || !country || !idType) {
+    message.textContent = "Complete all fields";
+    return;
+  }
 
-cameraStream
-.getTracks()
-.forEach(function(track){
+  if (!front) {
+    message.textContent = "Upload ID front";
+    return;
+  }
 
-track.stop();
+  if (idType !== "passport" && !back) {
+    message.textContent = "Upload ID back";
+    return;
+  }
 
-});
+  if (!selfieBlob) {
+    message.textContent = "Take live selfie";
+    return;
+  }
 
+  if (!consent) {
+    message.textContent = "Verification consent required";
+    return;
+  }
 
-cameraStream=null;
-document.getElementById("camera").style.display="none";  
+  const verificationData = new FormData();
 
-}
-
-}
-
-
-/* FORM CHECK */
-
-async function checkVerificationForm(){
-
-const name =
-document.getElementById(
-"signupName"
-).value.trim();
-
-const email =
-document.getElementById(
-"signupEmail"
-).value.trim();
-
-const password =
-document.getElementById(
-"signupPassword"
-).value;
-
-const country =
-document.getElementById(
-"signupCountry"
-).value;
-
-const idType =
-document.getElementById(
-"idType"
-).value;
-
-const front =
-document.getElementById(
-"idFront"
-).files[0];
-
-const back =
-document.getElementById(
-"idBack"
-).files[0];
-
-const consent =
-document.getElementById(
-"consent"
-).checked;
-
-const message =
-document.getElementById(
-"verificationMessage"
-);
-
-
-if(
-!name ||
-!email ||
-!password ||
-!country ||
-!idType
-){
-
-message.textContent =
-"Complete all fields";
-
-return;
-
-}
-
-
-if(!front){
-
-message.textContent =
-"Upload ID front";
-
-return;
-
-}
-
-
-if(
-idType !== "passport" &&
-!back
-){
-
-message.textContent =
-"Upload ID back";
-
-return;
-
-}
-
-
-if(!selfieBlob){
-
-message.textContent =
-"Take live selfie";
-
-return;
-
-}
-
-
-if(!consent){
-
-message.textContent =
-"Verification consent required";
-
-return;
-
-}
-
-
-message.textContent =
-"ID and selfie are ready for verification ✓";
-
-
-/*
-REAL verification will later
-go to YOUR self-hosted backend.
-
-We do NOT save ID/selfie
-in localStorage or GitHub.
-*/
-const verificationData = new FormData();
   verificationData.append("idFront", front);
-  if (back) verificationData.append("idBack", back);
+
+  if (back) {
+    verificationData.append("idBack", back);
+  }
+
   verificationData.append("selfie", selfieBlob);
-verificationData.append("idType", idType);
-verificationData.append("name", name);
-verificationData.append("email", email);
-verificationData.append("consent", "true");
-verificationData.append("country", country);
- message.textContent = "Verification data prepared successfully ✓"; 
-console.log("Verification data ready", verificationData);
-}
-/* ENTER SEARCH */  
-.getElementById("searchInput")
-.addEventListener(
-"keydown",
-function(event){
+  verificationData.append("idType", idType);
+  verificationData.append("name", name);
+  verificationData.append("email", email);
+  verificationData.append("country", country);
+  verificationData.append("consent", "true");
 
-if(event.key==="Enter"){
+  message.textContent = "Verification data prepared successfully ✓";
 
-searchProducts();
-
+  console.log("Verification data ready", verificationData);
 }
 
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+  searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      searchProducts();
+    }
+  });
+}
+
+window.addEventListener("click", function (event) {
+  const login = document.getElementById("loginModal");
+  const signup = document.getElementById("signupModal");
+
+  if (event.target === login) {
+    closeLogin();
+  }
+
+  if (event.target === signup) {
+    closeSignup();
+  }
 });
-
-
-/* CLOSE MODALS */
-
-window.addEventListener(
-"click",
-function(event){
-
-const login =
-document.getElementById(
-"loginModal"
-);
-
-const signup =
-document.getElementById(
-"signupModal"
-);
-
-
-if(event.target === login){
-
-closeLogin();
-
-}
-
-
-if(event.target === signup){
-
-closeSignup();
-
-}
-
-});
-
 
 updateCart();
-console.log("Obaid Safi Market ready");  
 
 </script>
 
