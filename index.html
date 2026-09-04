@@ -1181,7 +1181,7 @@ message.textContent = "Sending verification...";
   fetch("http://127.0.0.1:8000/verify", {
   method: "POST",
   body: verificationData
-   });
+   })
   .then(response => response.json())
   .then(data => {
    message.textContent = "Verification submitted successfully ✓";
