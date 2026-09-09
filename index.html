@@ -803,9 +803,19 @@ accept="image/*">
   <button type="button" onclick="closeIdFrontCamera()">Close ID Front Camera</button>
 
 <label>ID Back</label>
+<h3>Scan ID Back</h3>  
                 
 
 <input id="idBack"
+  <div id="idBackCameraBox" style="display:none;">
+  <video id="idBackCamera" autoplay playsinline style="width:100%;"></video>
+</div>
+  <button type="button" onclick="startIdBackCamera()">Open ID Back Camera</button>
+  <button type="button" onclick="captureIdBack()">Capture ID Back</button>
+  <button type="button" onclick="closeIdBackCamera()">Close ID Back Camera</button>
+  <canvas id="idBackCanvas" style="display:none;"></canvas>
+  <img id="idBackPreview" style="display:none; width:100%;" alt="ID Back Preview">
+  <p id="idBackStatus" style="margin-top:10px;color:#32db88"></p>
 type="file"
 accept="image/*">
 <button type="button" onclick="document.getElementById('idBack').value=''">Remove Back ID</button>
@@ -907,6 +917,8 @@ Total: $<span id="cartTotal">0</span>
 <script>
   let cart = JSON.parse(localStorage.getItem("osmCart") || "[]");
 let selfieBlob = null;
+  let idFrontBlob = null;
+  let idBackBlob = null;
 let cameraStream = null;
 
 function showNotice(text) {
@@ -1063,6 +1075,239 @@ async function startCamera() {
     if (status) status.textContent = "Camera permission denied";
   }
 }
+  let idFrontStream = null;
+
+async function startIdFrontCamera() {
+  const video = document.getElementById("idFrontCamera");
+  const box = document.getElementById("idFrontCameraBox");
+
+  try {
+    idFrontStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+      audio: false
+    });
+
+    video.srcObject = idFrontStream;
+    box.style.display = "block";
+  } catch (error) {
+    alert("Could not open ID camera.");
+  }
+}
+ 
+    function closeIdFrontCamera() {
+  if (idFrontStream) {
+    idFrontStream.getTracks().forEach(track => track.stop());
+    idFrontStream = null;
+  }
+
+  document.getElementById("idFrontCamera").srcObject = null;
+  document.getElementById("idFrontCameraBox").style.display = "none";
+}
+  const video = document.getElementById("idFrontCamera");
+ function captureIdFront() {
+    const video = document.getElementById("idFrontCamera");
+    const canvas = document.getElementById("idFrontCanvas");
+    const preview = document.getElementById("idFrontPreview");
+    const status = document.getElementById("idFrontStatus");
+
+    if (!video || !video.videoWidth || !video.videoHeight) {
+        alert("Please open the ID Front camera first.");
+        return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(function(blob) {
+        if (!blob) {
+            alert("Could not capture ID Front.");
+            return;
+        }
+
+        idFrontBlob = blob;
+
+        preview.src = URL.createObjectURL(blob);
+        preview.style.display = "block";
+
+        const oldInput = document.getElementById("idFront");
+        if (oldInput) {
+            oldInput.value = "";
+        }
+
+        if (status) {
+            status.textContent = "ID Front captured ✓";
+        }
+
+        closeIdFrontCamera();
+
+    }, "image/jpeg", 0.9);
+}
+
+
+let idBackStream = null;
+
+async function startIdBackCamera() {
+    try {
+        idBackStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { ideal: "environment" } },
+            audio: false
+        });
+
+        const video = document.getElementById("idBackCamera");
+        const box = document.getElementById("idBackCameraBox");
+        const status = document.getElementById("idBackStatus");
+
+        video.srcObject = idBackStream;
+        box.style.display = "block";
+
+        if (status) {
+            status.textContent = "ID Back camera opened ✓";
+        }
+
+    } catch (error) {
+        console.error("ID Back camera error:", error);
+        alert("Could not open ID Back camera.");
+    }
+}
+
+
+function closeIdBackCamera() {
+    if (idBackStream) {
+        idBackStream.getTracks().forEach(track => track.stop());
+        idBackStream = null;
+    }
+
+    const video = document.getElementById("idBackCamera");
+    const box = document.getElementById("idBackCameraBox");
+
+    if (video) {
+        video.srcObject = null;
+    }
+
+    if (box) {
+        box.style.display = "none";
+    }
+}
+
+
+function captureIdBack() {
+    const video = document.getElementById("idBackCamera");
+    const canvas = document.getElementById("idBackCanvas");
+    const preview = document.getElementById("idBackPreview");
+    const status = document.getElementById("idBackStatus");
+
+    if (!video || !video.videoWidth || !video.videoHeight) {
+        alert("Please open the ID Back camera first.");
+        return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(function(blob) {
+        if (!blob) {
+            alert("Could not capture ID Back.");
+            return;
+        }
+
+        idBackBlob = blob;
+
+        preview.src = URL.createObjectURL(blob);
+        preview.style.display = "block";
+
+        const oldInput = document.getElementById("idBack");
+        if (oldInput) {
+            oldInput.value = "";
+        }
+
+        if (status) {
+            status.textContent = "ID Back captured ✓";
+        }
+
+        closeIdBackCamera();
+
+    }, "image/jpeg", 0.9);
+}
+function closeIdBackCamera() {
+    if (idBackStream) {
+        idBackStream.getTracks().forEach(track => track.stop());
+        idBackStream = null;
+    }
+
+    const video = document.getElementById("idBackCamera");
+    const box = document.getElementById("idBackCameraBox");
+
+    if (video) {
+        video.srcObject = null;
+    }
+
+    if (box) {
+        box.style.display = "none";
+    }
+}
+
+function captureIdBack() {
+    const video = document.getElementById("idBackCamera");
+    const canvas = document.getElementById("idBackCanvas");
+    const preview = document.getElementById("idBackPreview");
+    const status = document.getElementById("idBackStatus");
+
+    if (!video || !video.videoWidth || !video.videoHeight) {
+        alert("Please open the ID Back camera first.");
+        return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(function(blob) {
+        if (!blob) {
+            alert("Could not capture ID Back.");
+            return;
+        }
+
+        idBackBlob = blob;
+
+        preview.src = URL.createObjectURL(blob);
+        preview.style.display = "block";
+
+        const oldInput = document.getElementById("idBack");
+        if (oldInput) {
+            oldInput.value = "";
+        }
+
+        if (status) {
+            status.textContent = "ID Back captured ✓";
+        }
+
+        closeIdBackCamera();
+
+    }, "image/jpeg", 0.9);
+}
+  const canvas = document.getElementById("idFrontCanvas");
+  const preview = document.getElementById("idFrontPreview");
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  preview.src = canvas.toDataURL("image/jpeg", 0.9);
+    document.getElementById("idFront").value = "";
+    closeIdFrontCamera();
+    document.getElementById("idFrontStatus").textContent = "ID Front captured ✓";
+  preview.style.display = "block";
+}
 
 function stopCamera() {
   if (cameraStream) {
@@ -1151,40 +1396,45 @@ function checkVerificationForm() {
     return;
   }
 
-  if (!front) {
-    message.textContent = "Upload ID front";
-    return;
-  }
+ const finalFront = idFrontBlob || front;
+const finalBack = idBackBlob || back;
 
-  if (idType !== "passport" && !back) {
-    message.textContent = "Upload ID back";
+if (!finalFront) {
+    message.textContent = "Capture or upload ID front";
     return;
-  }
+}
 
-  if (!selfieBlob) {
+if (idType !== "passport" && !finalBack) {
+    message.textContent = "Capture or upload ID back";
+    return;
+}
+
+if (!selfieBlob) {
     message.textContent = "Take live selfie";
     return;
-  }
+}
 
-  if (!consent) {
+if (!consent) {
     message.textContent = "Verification consent required";
     return;
-  }
+}
 
-  const verificationData = new FormData();
+const verificationData = new FormData();
 
-  verificationData.append("idFront", front);
+verificationData.append("idFront", finalFront, "id_front.jpg");
 
-  if (back) {
-    verificationData.append("idBack", back);
-  }
+if (finalBack) {
+    verificationData.append("idBack", finalBack, "id_back.jpg");
+}
 
-  verificationData.append("selfie", selfieBlob);
-  verificationData.append("idType", idType);
-  verificationData.append("name", name);
-  verificationData.append("email", email);
-  verificationData.append("country", country);
-  verificationData.append("consent", "true");
+verificationData.append("selfie", selfieBlob, "selfie.jpg");
+verificationData.append("idType", idType);
+verificationData.append("name", name);
+verificationData.append("email", email);
+verificationData.append("country", country);
+verificationData.append("consent", "true");
+
+message.textContent = "Sending verification...";
 message.textContent = "Sending verification...";
  fetch("http://192.168.1.104:8000/verify", { 
   method: "POST",
