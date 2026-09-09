@@ -787,12 +787,20 @@ National ID Card
 </select>
 
 <label>ID / ID Front</label>
-
+ <h3>Scan ID Front</h3>
+<div id="idFrontCameraBox" style="display:none;">
+  <video id="idFrontCamera" autoplay playsinline></video>
+</div>  
 
   <input id="idFront"
 type="file"
 accept="image/*">
   <button type="button" onclick="document.getElementById('idFront').value=''">Remove Front ID</button>
+  <button type="button" onclick="startIdFrontCamera()">Open ID Front Camera</button>
+  <button type="button" onclick="captureIdFront()">Capture ID Front</button>
+  <canvas id="idFrontCanvas" style="display:none;"></canvas>
+  <img id="idFrontPreview" style="display:none; width:100%; max-width:420px;" alt="ID Front Preview">
+  <button type="button" onclick="closeIdFrontCamera()">Close ID Front Camera</button>
 
 <label>ID Back</label>
                 
