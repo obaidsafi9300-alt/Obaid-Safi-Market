@@ -833,7 +833,9 @@ Close ID Back Camera
      alt="ID Back Preview">
 
 <p id="idBackStatus" style="margin-top:10px;color:#32db88"></p>
-
+<button type="button" onclick="deleteIdBack()">
+Delete ID Back
+</button>
 <h3>Live Selfie</h3>
 
 
@@ -1258,6 +1260,26 @@ function captureIdBack() {
   }, "image/jpeg", 0.9);
 }
 function stopCamera() {
+  function deleteIdBack() {
+    idBackBlob = null;
+
+    const preview = document.getElementById("idBackPreview");
+    const status = document.getElementById("idBackStatus");
+    const input = document.getElementById("idBack");
+
+    if (preview) {
+        preview.src = "";
+        preview.style.display = "none";
+    }
+
+    if (input) {
+        input.value = "";
+    }
+
+    if (status) {
+        status.textContent = "";
+    }
+}
   if (cameraStream) {
     cameraStream.getTracks().forEach(function (track) {
       track.stop();
