@@ -1259,6 +1259,26 @@ function captureIdBack() {
 
   }, "image/jpeg", 0.9);
 }
+ function deleteIdBack() {
+    idBackBlob = null;
+
+    const preview = document.getElementById("idBackPreview");
+    const status = document.getElementById("idBackStatus");
+    const input = document.getElementById("idBack");
+
+    if (preview) {
+        preview.src = "";
+        preview.style.display = "none";
+    }
+
+    if (input) {
+        input.value = "";
+    }
+
+    if (status) {
+        status.textContent = "";
+    }
+} 
 function stopCamera() {
   function deleteIdBack() {
     idBackBlob = null;
