@@ -801,7 +801,40 @@ accept="image/*">
   <canvas id="idFrontCanvas" style="display:none;"></canvas>
   <img id="idFrontPreview" style="display:none; width:100%; max-width:420px;" alt="ID Front Preview">
   <button type="button" onclick="closeIdFrontCamera()">Close ID Front Camera</button>
+<label>ID Back</label>
+<h3>Scan ID Back</h3>
 
+<input id="idBack" type="file" accept="image/*">
+
+<button type="button" onclick="document.getElementById('idBack').value=''">
+Remove Back ID
+</button>
+
+<div id="idBackCameraBox" style="display:none;">
+  <video id="idBackCamera" autoplay playsinline style="width:100%;"></video>
+</div>
+
+<button type="button" onclick="startIdBackCamera()">
+Open ID Back Camera
+</button>
+
+<button type="button" onclick="captureIdBack()">
+Capture ID Back
+</button>
+
+<button type="button" onclick="closeIdBackCamera()">
+Close ID Back Camera
+</button>
+
+<canvas id="idBackCanvas" style="display:none;"></canvas>
+
+<img id="idBackPreview"
+     style="display:none;width:100%;"
+     alt="ID Back Preview">
+
+<p id="idBackStatus" style="margin-top:10px;color:#32db88"></p>
+
+<h3>Live Selfie</h3>
 
 
 <video id="camera"
