@@ -1483,6 +1483,57 @@ message.textContent = "Sending verification...";
   console.log("Verification data ready", verificationData);
 }
 
+  async function checkVerificationStatus(email) {
+    const message = document.getElementById("verificationMessage");
+
+    if (!email) {
+        if (message) message.textContent = "Email is required";
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://192.168.1.104:8000/users/" +
+            encodeURIComponent(email) +
+            "/verification-status"
+        );
+
+        if (!response.ok) {
+            throw new Error("Status request failed");
+        }
+
+        const data = await response.json();
+
+        if (data.status === "Verified") {
+            if (message) {
+                message.textContent = "✓ Identity Verified";
+                message.style.color = "#32db88";
+            }
+        } else if (data.status === "Rejected") {
+            if (message) {
+                message.textContent = "✕ Verification Rejected";
+                message.style.color = "#ff4055";
+            }
+        } else {
+            if (message) {
+                message.textContent = "⏳ Verification Pending";
+                message.style.color = "#ffc400";
+            }
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error("Verification status error:", error);
+
+        if (message) {
+            message.textContent = "Could not load verification status";
+            message.style.color = "#ff4055";
+        }
+    }
+}
+
+window.checkVerificationStatus = checkVerificationStatus;
 const searchInput = document.getElementById("searchInput");
 
 if (searchInput) {
