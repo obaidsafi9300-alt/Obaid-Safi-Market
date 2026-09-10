@@ -1475,6 +1475,7 @@ message.textContent = "Sending verification...";
   .then(response => response.json())
   .then(data => {
    message.textContent = "Verification submitted successfully ✓";
+    checkVerificationStatus(email);
   })
 .catch(error => {
   console.error("Verification error:", error);
