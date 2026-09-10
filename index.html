@@ -1305,6 +1305,23 @@ function captureIdBack() {
 }
   window.deleteIdBack = deleteIdBack;
 function stopCamera() {
+  function deleteIdFront() {
+    idFrontBlob = null;
+
+    const preview = document.getElementById("idFrontPreview");
+    const input = document.getElementById("idFront");
+
+    if (preview) {
+        preview.src = "";
+        preview.style.display = "none";
+    }
+
+    if (input) {
+        input.value = "";
+    }
+}
+
+window.deleteIdFront = deleteIdFront;
   function deleteIdBack() {
     idBackBlob = null;
 
