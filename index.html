@@ -1475,7 +1475,8 @@ message.textContent = "Sending verification...";
   .then(response => response.json())
   .then(data => {
    message.textContent = "Verification submitted successfully ✓";
-    checkVerificationStatus(email);
+    localStorage.setItem("verificationEmail", email);
+checkVerificationStatus(email);
   })
 .catch(error => {
   console.error("Verification error:", error);
@@ -1535,6 +1536,11 @@ message.textContent = "Sending verification...";
 }
 
 window.checkVerificationStatus = checkVerificationStatus;
+  const savedVerificationEmail = localStorage.getItem("verificationEmail");
+
+if (savedVerificationEmail) {
+    checkVerificationStatus(savedVerificationEmail);
+}
 const searchInput = document.getElementById("searchInput");
 
 if (searchInput) {
