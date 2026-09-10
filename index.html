@@ -422,6 +422,12 @@ footer{
 <button class="btn red" onclick="openSignup()">Sign Up</button>
 
 <div class="cart" onclick="openCart()">
+  <div id="profileArea" style="display:none; align-items:center; gap:8px; margin-left:8px;">
+  <span id="profileName" style="font-weight:700;">My Profile</span>
+  <span id="profileVerificationBadge"
+        style="font-weight:700; font-size:14px;">
+  </span>
+</div>
 🛒 Cart (<span id="cartCount">0</span>)
 </div>
 
@@ -1475,7 +1481,14 @@ message.textContent = "Sending verification...";
   .then(response => response.json())
   .then(data => {
    message.textContent = "Verification submitted successfully ✓";
-    localStorage.setItem("verificationEmail", email);
+   localStorage.setItem("verificationEmail", email);
+localStorage.setItem("verificationName", name);
+    profileArea.style.display = "flex";
+    const signInButton = document.querySelector('button[onclick="openLogin()"]');
+const signUpButton = document.querySelector('button[onclick="openSignup()"]');
+
+if (signInButton) signInButton.style.display = "none";
+if (signUpButton) signUpButton.style.display = "none";
 checkVerificationStatus(email);
   })
 .catch(error => {
@@ -1505,7 +1518,7 @@ checkVerificationStatus(email);
         }
 
         const data = await response.json();
-
+updateProfileVerification(data.status || "Pending");
         if (data.status === "Verified") {
             if (message) {
                 message.textContent = "✓ Identity Verified";
@@ -1536,6 +1549,40 @@ checkVerificationStatus(email);
 }
 
 window.checkVerificationStatus = checkVerificationStatus;
+  function updateProfileVerification(status) {
+    const profileArea = document.getElementById("profileArea");
+        const profileName = document.getElementById("profileName");
+    const badge = document.getElementById("profileVerificationBadge");
+
+    if (!profileArea || !badge) return;
+
+    profileArea.style.display = "flex";
+    const signInButton = document.querySelector('button[onclick="openLogin()"]');
+const signUpButton = document.querySelector('button[onclick="openSignup()"]');
+
+if (signInButton) signInButton.style.display = "none";
+if (signUpButton) signUpButton.style.display = "none";
+
+    const savedName = localStorage.getItem("verificationName");
+    if (profileName && savedName) {
+        profileName.textContent = savedName;
+    }
+
+    const value = String(status || "Pending").toLowerCase();
+
+    if (value === "verified") {
+        badge.textContent = "✓ Verified";
+        badge.style.color = "#32db88";
+    } else if (value === "rejected") {
+        badge.textContent = "✕ Not Verified";
+        badge.style.color = "#ff4055";
+    } else {
+        badge.textContent = "⏳ Pending";
+        badge.style.color = "#ffc400";
+    }
+}
+
+window.updateProfileVerification = updateProfileVerification;
   const savedVerificationEmail = localStorage.getItem("verificationEmail");
 
 if (savedVerificationEmail) {
