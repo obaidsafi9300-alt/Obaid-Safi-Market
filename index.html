@@ -799,6 +799,9 @@ accept="image/*">
   <button type="button" onclick="startIdFrontCamera()">Open ID Front Camera</button>
   <button type="button" onclick="captureIdFront()">Capture ID Front</button>
   <canvas id="idFrontCanvas" style="display:none;"></canvas>
+  <button type="button" onclick="deleteIdFront()">
+Delete ID Front
+</button>
   <img id="idFrontPreview" style="display:none; width:100%; max-width:420px;" alt="ID Front Preview">
   <button type="button" onclick="closeIdFrontCamera()">Close ID Front Camera</button>
 <label>ID Back</label>
@@ -1164,7 +1167,28 @@ async function startIdFrontCamera() {
     }, "image/jpeg", 0.9);
 }
 
+function deleteIdFront() {
+    idFrontBlob = null;
 
+    const preview = document.getElementById("idFrontPreview");
+    const status = document.getElementById("idFrontStatus");
+    const input = document.getElementById("idFront");
+
+    if (preview) {
+        preview.src = "";
+        preview.style.display = "none";
+    }
+
+    if (input) {
+        input.value = "";
+    }
+
+    if (status) {
+        status.textContent = "";
+    }
+}
+
+window.deleteIdFront = deleteIdFront;
 let idBackStream = null;
 
 async function startIdBackCamera() {
