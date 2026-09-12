@@ -427,6 +427,11 @@ footer{
   <span id="profileVerificationBadge"
         style="font-weight:700; font-size:14px;">
   </span>
+    <button id="logoutButton"
+        onclick="logoutMarketAccount()"
+        style="display:none; margin-left:12px; padding:7px 12px; border:1px solid #ff4055; border-radius:7px; background:transparent; color:#ff4055; font-weight:700; cursor:pointer;">
+    Log Out
+</button>
 </div>
 🛒 Cart (<span id="cartCount">0</span>)
 </div>
@@ -1483,6 +1488,7 @@ message.textContent = "Sending verification...";
    message.textContent = "Verification submitted successfully ✓";
    localStorage.setItem("verificationEmail", email);
 localStorage.setItem("verificationName", name);
+    localStorage.setItem("marketLoggedIn", "true");
     profileArea.style.display = "flex";
     const signInButton = document.querySelector('button[onclick="openLogin()"]');
 const signUpButton = document.querySelector('button[onclick="openSignup()"]');
@@ -1583,9 +1589,29 @@ if (signUpButton) signUpButton.style.display = "none";
 }
 
 window.updateProfileVerification = updateProfileVerification;
-  const savedVerificationEmail = localStorage.getItem("verificationEmail");
+  function logoutMarketAccount() {
+    localStorage.removeItem("marketLoggedIn");
 
-if (savedVerificationEmail) {
+    const profileArea = document.getElementById("profileArea");
+    const logoutButton = document.getElementById("logoutButton");
+    const signInButton = document.querySelector('button[onclick="openLogin()"]');
+    const signUpButton = document.querySelector('button[onclick="openSignup()"]');
+
+    if (profileArea) profileArea.style.display = "none";
+    if (logoutButton) logoutButton.style.display = "none";
+
+    if (signInButton) signInButton.style.display = "";
+    if (signUpButton) signUpButton.style.display = "";
+
+    location.reload();
+}
+
+window.logoutMarketAccount = logoutMarketAccount;
+  const savedVerificationEmail = localStorage.getItem("verificationEmail");
+ const marketLoggedIn = localStorage.getItem("marketLoggedIn") === "true";
+const logoutButton = document.getElementById("logoutButton");
+if (marketLoggedIn && logoutButton) logoutButton.style.display = "inline-block";
+if (marketLoggedIn && savedVerificationEmail) {
     checkVerificationStatus(savedVerificationEmail);
 }
 const searchInput = document.getElementById("searchInput");
