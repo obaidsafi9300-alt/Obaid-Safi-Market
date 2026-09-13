@@ -1422,7 +1422,7 @@ function deleteSelfie() {
   if (deleteButton) deleteButton.style.display = "none";
 }
 
-function checkVerificationForm() {
+async function checkVerificationForm() {
   const name = document.getElementById("signupName").value.trim();
   const email = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value;
@@ -1434,30 +1434,7 @@ function checkVerificationForm() {
   const message = document.getElementById("verificationMessage");
 
   if (!name || !email || !password || !country || !idType) {
-    const signupData = new FormData();
-signupData.append("name", name);
-signupData.append("email", email);
-signupData.append("password", password);
-
-try {
-    const signupResponse = await fetch(
-        "http://192.168.1.104:8000/signup",
-        {
-            method: "POST",
-            body: signupData
-        }
-    );
-
-    const signupResult = await signupResponse.json();
-
-    if (!signupResult.success) {
-        message.textContent = signupResult.message || "Account creation failed";
-        return;
-    }
-} catch (error) {
-    message.textContent = "Could not connect to account server";
-    return;
-}
+   
     message.textContent = "Complete all fields";
     return;
   }
@@ -1484,6 +1461,37 @@ if (!consent) {
     message.textContent = "Verification consent required";
     return;
 }
+if (!name || !email || !password || !country || !idType) {
+    message.textContent = "Complete all fields";
+    return;
+}
+
+const signupData = new FormData();
+signupData.append("name", name);
+signupData.append("email", email);
+signupData.append("password", password);
+
+try {
+    const signupResponse = await fetch(
+        "http://192.168.1.104:8000/signup",
+        {
+            method: "POST",
+            body: signupData
+        }
+    );
+
+    const signupResult = await signupResponse.json();
+
+    if (!signupResult.success) {
+        message.textContent = signupResult.message || "Account creation failed";
+        return;
+    }
+} catch (error) {
+    message.textContent = "Could not connect to account server";
+    return;
+}
+
+const finalFront = idFrontBlob || front;  
 
 const verificationData = new FormData();
 
