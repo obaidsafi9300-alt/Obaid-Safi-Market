@@ -1073,7 +1073,10 @@ function closeLogin() {
   const modal = document.getElementById("loginModal");
   if (modal) modal.style.display = "none";
 }
-
+function openLogin() {
+    const modal = document.getElementById("loginModal");
+    if (modal) modal.style.display = "flex";
+}
 function openSignup() {
   const modal = document.getElementById("signupModal");
   if (modal) modal.style.display = "flex";
